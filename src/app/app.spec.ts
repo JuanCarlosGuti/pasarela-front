@@ -1,23 +1,28 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
+import { routes } from './app.routes';
 
-describe('App', () => {
+describe('App (layout raíz)', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('se crea', () => {
     const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('muestra la marca y los puntos de referencia accesibles (header y main)', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, pasarela-front');
+    const html = fixture.nativeElement as HTMLElement;
+
+    expect(html.querySelector('header')?.textContent).toContain('Pasarela');
+    expect(html.querySelector('main')).not.toBeNull();
+    expect(html.querySelector('router-outlet')).not.toBeNull();
   });
 });
