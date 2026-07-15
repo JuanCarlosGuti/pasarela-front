@@ -1,0 +1,65 @@
+// Formulario público de registro, mobile-first (docs/04).
+form {
+  display: grid;
+  gap: var(--espacio-2);
+  max-width: 480px;
+}
+
+label {
+  font-weight: 600;
+  margin-top: var(--espacio-2);
+}
+
+input,
+select {
+  padding: var(--espacio-3);
+  font-size: 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+button {
+  margin-top: var(--espacio-3);
+  padding: var(--espacio-3);
+  min-height: 44px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-primario);
+  border: none;
+  border-radius: var(--radio);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.aviso {
+  color: var(--color-alerta);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: var(--color-error);
+  margin: var(--espacio-2) 0 0;
+}
+
+.exito {
+  max-width: 480px;
+
+  a {
+    display: inline-block;
+    margin-top: var(--espacio-3);
+    padding: var(--espacio-3) var(--espacio-4);
+    min-height: 44px;
+    background: var(--color-primario);
+    color: #fff;
+    text-decoration: none;
+    border-radius: var(--radio);
+    font-weight: 700;
+  }
+}
