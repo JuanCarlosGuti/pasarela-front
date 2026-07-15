@@ -71,7 +71,7 @@ mi caja y mi tablero.
 - _Coordinación backend:_ si se sirve desde otro origen en dev, tarea CORS
   (T-00x del backlog backend); con proxy no hace falta.
 
-### 🔵 HUF-002 — Sesión, guardas y expiración
+### ✅ HUF-002 — Sesión, guardas y expiración
 
 **Como** Dueño **quiero** que la app maneje mi sesión con seguridad **para**
 no quedar expuesto ni bloqueado sin explicación.

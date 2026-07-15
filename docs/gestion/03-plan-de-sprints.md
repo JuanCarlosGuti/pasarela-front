@@ -53,7 +53,7 @@ suite Playwright completa en CI.
 | Sprint                      | Estado       | Tag       |
 | --------------------------- | ------------ | --------- |
 | F0 — Fundaciones            | ✅ cerrado   | `vF0.0.1` |
-| F1 — Autenticación          | 🔵 en curso  | —         |
+| F1 — Autenticación          | ✅ cerrado   | `vF0.1.0` |
 | F2 — La caja                | ⬜ pendiente | —         |
 | F3 — Pagador + onboarding   | ⬜ pendiente | —         |
 | F4 — Tablero                | ⬜ pendiente | —         |
