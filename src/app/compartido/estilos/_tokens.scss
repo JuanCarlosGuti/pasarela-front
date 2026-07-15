@@ -1,0 +1,21 @@
+// Tokens de diseño (docs/04): TODO color, espacio o radio sale de aquí.
+// Punto de partida honesto — se ajustan cuando exista identidad visual.
+:root {
+  --color-primario: #0d47a1;
+  --color-exito: #1b5e20;
+  --color-alerta: #e65100;
+  --color-error: #b71c1c;
+  --color-fondo: #fafafa;
+  --color-texto: #1a1a1a;
+  --color-superficie: #ffffff;
+  --color-borde: #d7d7d7;
+
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 16px;
+  --espacio-4: 24px;
+  --espacio-5: 32px;
+  --espacio-6: 48px;
+
+  --radio: 12px;
+}
