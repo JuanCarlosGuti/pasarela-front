@@ -52,7 +52,7 @@ completa **para** construir con las mismas reglas que el backend.
 
 ## Épica EF1 — Autenticación _(Sprint F1)_
 
-### ⬜ HUF-001 — Iniciar sesión
+### 🔵 HUF-001 — Iniciar sesión
 
 **Como** Dueño **quiero** entrar con mi correo y contraseña **para** operar
 mi caja y mi tablero.
