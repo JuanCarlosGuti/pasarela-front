@@ -94,6 +94,20 @@
     font-weight: 700;
     margin-left: auto;
   }
+
+  .comprobante {
+    color: var(--color-primario);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+.tabla-escritorio .comprobante {
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .tabla-escritorio {

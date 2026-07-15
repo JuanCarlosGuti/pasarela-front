@@ -43,4 +43,25 @@ describe('OrdenesApi', () => {
     expect(peticion.request.method).toBe('GET');
     peticion.flush({ id: 'orden-1', estado: 'PAGO_DETECTADO' });
   });
+
+  it('consulta el comprobante con GET /api/ordenes/{id}/comprobante (HUF-011)', () => {
+    let respuesta: unknown;
+    api.comprobante('orden-1').subscribe((r) => (respuesta = r));
+
+    const peticion = http.expectOne('/api/ordenes/orden-1/comprobante');
+    expect(peticion.request.method).toBe('GET');
+    peticion.flush({
+      numeroComprobante: 'orden-1',
+      referencia: 'ref-1',
+      monto: 25000,
+      moneda: 'COP',
+      estado: 'PAGO_DETECTADO',
+      creadaEn: '2026-07-15T14:00:00Z',
+      pagoDetectadoEn: '2026-07-15T14:02:00Z',
+      liquidadaEn: null,
+      emitidoEn: '2026-07-15T14:10:00Z',
+    });
+
+    expect(respuesta).toMatchObject({ numeroComprobante: 'orden-1', liquidadaEn: null });
+  });
 });

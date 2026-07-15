@@ -32,6 +32,18 @@ export interface OrdenDetalle {
   transiciones: TransicionDeOrden[];
 }
 
+export interface Comprobante {
+  numeroComprobante: string;
+  referencia: string;
+  monto: number;
+  moneda: string;
+  estado: string;
+  creadaEn: string;
+  pagoDetectadoEn: string;
+  liquidadaEn: string | null;
+  emitidoEn: string;
+}
+
 /** Cliente del contexto de pagos del backend (órdenes de cobro). */
 @Injectable({ providedIn: 'root' })
 export class OrdenesApi {
@@ -44,5 +56,10 @@ export class OrdenesApi {
   /** Detalle del dueño; también es el endpoint de polling (ADR-F003). */
   consultarOrden(id: string): Observable<OrdenDetalle> {
     return this.http.get<OrdenDetalle>(`/api/ordenes/${id}`);
+  }
+
+  /** Solo órdenes pagadas/liquidadas; una orden sin pagar responde 422 (HUF-011). */
+  comprobante(id: string): Observable<Comprobante> {
+    return this.http.get<Comprobante>(`/api/ordenes/${id}/comprobante`);
   }
 }
