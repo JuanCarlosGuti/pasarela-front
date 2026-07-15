@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { SesionService } from './nucleo/auth/sesion.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,11 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('pasarela-front');
+  protected readonly sesion = inject(SesionService);
+  private readonly router = inject(Router);
+
+  protected salir(): void {
+    this.sesion.cerrar();
+    this.router.navigateByUrl('/entrar');
+  }
 }

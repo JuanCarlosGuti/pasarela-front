@@ -30,6 +30,13 @@ export class PaginaEntrar {
     contrasena: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
 
+  constructor() {
+    // HUF-002: si el interceptor cerró la sesión por un 401, se explica aquí
+    if (this.sesion.consumirAvisoDeExpiracion()) {
+      this.error.set('Tu sesión expiró. Vuelve a entrar');
+    }
+  }
+
   protected get botonBloqueado(): boolean {
     return this.cargando() || this.segundosDeEspera() > 0;
   }
