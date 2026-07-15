@@ -132,8 +132,7 @@ sprint = merge `develop`→`main` + tag `vF0.<sprint>.0` + retro de 3 líneas.
 
 ## 9. Estado actual
 
-- [ ] **Sprint F0** 🔵 en curso: TF-001 ✅ (esqueleto + docs + CI + repo) ·
-      TF-002 ⬜ (ESLint/Prettier) · TF-003 ⬜ (tokens + layout + rutas lazy)
+- [x] **Sprint F0:** fundaciones — esqueleto, docs, CI, tokens, rutas — `vF0.0.1`
 - [ ] **Sprint F1:** autenticación (login JWT, sesión, guardas por rol)
 - [ ] **Sprint F2:** la caja de cobro (monto → QR → polling → PAGADO ✓)
 - [ ] **Sprint F3:** página del pagador + registro de comercio
