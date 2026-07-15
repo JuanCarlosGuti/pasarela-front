@@ -1,0 +1,35 @@
+@switch (sondeo.resultado()) {
+  @case ('cargando') {
+    <section class="cargando">
+      <p>Cargando…</p>
+    </section>
+  }
+  @case ('esperando') {
+    <section class="esperando">
+      <p class="monto">{{ formatearMonto(sondeo.monto()) }}</p>
+      <p class="instruccion">Esperando confirmación del pago…</p>
+      @if (sondeo.sinConexion()) {
+        <p class="sin-conexion" role="status">Sin conexión, reintentando…</p>
+      }
+    </section>
+  }
+  @case ('pagada') {
+    <section class="pagada" role="status" aria-live="assertive">
+      <p class="check">✓</p>
+      <h1>PAGADO</h1>
+      <p class="monto-pagado">{{ formatearMonto(sondeo.monto()) }}</p>
+    </section>
+  }
+  @case ('expirada') {
+    <section class="expirada" role="status" aria-live="assertive">
+      <h1>Este pago expiró</h1>
+      <p>Pídele al comercio que genere un nuevo cobro.</p>
+    </section>
+  }
+  @case ('no-existe') {
+    <section class="no-existe" role="status">
+      <h1>Este pago no existe</h1>
+      <p>Verifica el enlace con el comercio.</p>
+    </section>
+  }
+}
