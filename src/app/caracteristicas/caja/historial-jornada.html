@@ -1,0 +1,54 @@
+@if (detalle(); as orden) {
+  <section class="detalle">
+    <button type="button" class="cerrar-detalle" (click)="cerrarDetalle()">← Volver</button>
+    <h2>{{ formatearMonto(orden.monto) }}</h2>
+    <p class="estado {{ estadoVisual(orden.estado).clase }}">
+      {{ estadoVisual(orden.estado).etiqueta }}
+    </p>
+    <p class="referencia">Referencia: {{ orden.referencia }}</p>
+
+    <h3>Historial</h3>
+    @if (orden.transiciones.length === 0) {
+      <p>Sin transiciones todavía.</p>
+    } @else {
+      <ul class="transiciones">
+        @for (transicion of orden.transiciones; track transicion.momento) {
+          <li>
+            {{ transicion.desde }} → {{ transicion.hacia }} ·
+            {{ formatearHora(transicion.momento) }}
+          </li>
+        }
+      </ul>
+    }
+  </section>
+} @else {
+  <section class="lista">
+    <h2>Cobros de hoy</h2>
+
+    @if (cargando()) {
+      <p>Cargando…</p>
+    } @else if (error(); as mensaje) {
+      <p role="alert" class="error">{{ mensaje }}</p>
+    } @else if (ordenes().length === 0) {
+      <p class="vacio">Aún no has cobrado hoy</p>
+    } @else {
+      <ul class="ordenes">
+        @for (orden of ordenes(); track orden.id) {
+          <li class="orden">
+            <button type="button" (click)="verDetalle(orden.id)">
+              <span class="hora">{{ formatearHora(orden.creadaEn) }}</span>
+              <span class="monto">{{ formatearMonto(orden.monto) }}</span>
+              <span class="estado {{ estadoVisual(orden.estado).clase }}">
+                {{ estadoVisual(orden.estado).etiqueta }}
+              </span>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+
+    @if (cargandoDetalle()) {
+      <p>Abriendo…</p>
+    }
+  </section>
+}

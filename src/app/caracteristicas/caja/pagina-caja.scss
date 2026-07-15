@@ -183,3 +183,18 @@
     cursor: pointer;
   }
 }
+
+// HUF-005: entrar/salir del historial sin salir de la caja
+.ver-historial,
+.volver-a-cobrar {
+  display: block;
+  margin: var(--espacio-3) auto 0;
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  color: var(--color-primario);
+  font-weight: 600;
+  cursor: pointer;
+}

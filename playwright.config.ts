@@ -9,6 +9,11 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 30_000,
   fullyParallel: false,
+  // Todos los E2E comparten IP (localhost) frente al rate limiting por IP
+  // del backend (HU-022, login.maximo=10/60s): con más de un worker, varios
+  // archivos hacen login en paralelo y agotan el cupo entre todos. Un solo
+  // worker mantiene el volumen de logins realista para el límite local.
+  workers: 1,
   use: {
     baseURL: 'http://localhost:4200',
   },
