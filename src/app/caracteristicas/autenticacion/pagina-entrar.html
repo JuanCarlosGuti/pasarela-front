@@ -1,0 +1,40 @@
+<h1>Entrar</h1>
+
+<form [formGroup]="formulario" (submit)="enviar()">
+  <label for="usuario">Correo</label>
+  <input
+    id="usuario"
+    name="usuario"
+    type="email"
+    formControlName="usuario"
+    autocomplete="username"
+    required
+  />
+
+  <label for="contrasena">Contraseña</label>
+  <input
+    id="contrasena"
+    name="contrasena"
+    type="password"
+    formControlName="contrasena"
+    autocomplete="current-password"
+    required
+  />
+
+  @if (error(); as mensaje) {
+    <p role="alert" class="error">
+      {{ mensaje }}
+      @if (segundosDeEspera() > 0) {
+        <span>({{ segundosDeEspera() }} s)</span>
+      }
+    </p>
+  }
+
+  <button type="submit" [disabled]="botonBloqueado">
+    @if (cargando()) {
+      Entrando…
+    } @else {
+      Entrar
+    }
+  </button>
+</form>
