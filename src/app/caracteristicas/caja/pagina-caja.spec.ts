@@ -100,4 +100,32 @@ describe('PaginaCaja (HUF-003)', () => {
     expect(html.querySelector('[role="alert"]')?.textContent).toContain('tope por transacción');
     expect(html.textContent).toContain('$ 999');
   });
+
+  it('Ver cobros de hoy muestra el historial sin perder el teclado (HUF-005)', () => {
+    const fixture = crear();
+    const html = fixture.nativeElement as HTMLElement;
+    tocar(html, '5');
+    fixture.detectChanges();
+
+    tocar(html, 'Ver cobros de hoy');
+    fixture.detectChanges();
+    http
+      .expectOne((req) => req.url === '/api/ventas')
+      .flush({
+        ordenes: [],
+        totalElementos: 0,
+        pagina: 0,
+        tamano: 20,
+      });
+    fixture.detectChanges();
+
+    expect(html.textContent).toContain('Cobros de hoy');
+    expect(html.querySelector('.teclado')).toBeNull();
+
+    tocar(html, 'Volver a cobrar');
+    fixture.detectChanges();
+
+    expect(html.querySelector('.teclado')).not.toBeNull();
+    expect(html.textContent).toContain('$ 5'); // el monto no se perdió
+  });
 });

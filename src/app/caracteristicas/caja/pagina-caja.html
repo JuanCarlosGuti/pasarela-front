@@ -1,28 +1,41 @@
 @switch (caja.fase()) {
   @case ('digitando') {
-    <section class="digitar">
-      <p class="monto" aria-live="polite">{{ caja.montoFormateado() }}</p>
+    @if (mostrandoHistorial()) {
+      <app-historial-jornada />
+      <button type="button" class="volver-a-cobrar" (click)="mostrandoHistorial.set(false)">
+        Volver a cobrar
+      </button>
+    } @else {
+      <section class="digitar">
+        <p class="monto" aria-live="polite">{{ caja.montoFormateado() }}</p>
 
-      @if (caja.error(); as mensaje) {
-        <p role="alert" class="error">{{ mensaje }}</p>
-      }
-
-      <div class="teclado">
-        @for (digito of digitos; track digito) {
-          <button type="button" (click)="caja.digitar(digito)">{{ digito }}</button>
+        @if (caja.error(); as mensaje) {
+          <p role="alert" class="error">{{ mensaje }}</p>
         }
-        <button type="button" class="borrar" (click)="caja.borrar()" aria-label="Borrar">⌫</button>
-        <button type="button" (click)="caja.digitar('0')">0</button>
-        <button
-          type="button"
-          class="cobrar"
-          [disabled]="caja.monto() === 0"
-          (click)="caja.cobrar()"
-        >
-          COBRAR
+
+        <div class="teclado">
+          @for (digito of digitos; track digito) {
+            <button type="button" (click)="caja.digitar(digito)">{{ digito }}</button>
+          }
+          <button type="button" class="borrar" (click)="caja.borrar()" aria-label="Borrar">
+            ⌫
+          </button>
+          <button type="button" (click)="caja.digitar('0')">0</button>
+          <button
+            type="button"
+            class="cobrar"
+            [disabled]="caja.monto() === 0"
+            (click)="caja.cobrar()"
+          >
+            COBRAR
+          </button>
+        </div>
+
+        <button type="button" class="ver-historial" (click)="mostrandoHistorial.set(true)">
+          Ver cobros de hoy
         </button>
-      </div>
-    </section>
+      </section>
+    }
   }
   @case ('creando') {
     <section class="creando">
