@@ -1,0 +1,59 @@
+// Página pública del pagador (docs/04): sobria, sin marca de terceros,
+// desenlaces inconfundibles — el mismo lenguaje visual de la caja.
+:host {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--espacio-4) var(--espacio-3);
+  text-align: center;
+}
+
+.monto {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: var(--espacio-3) 0;
+}
+
+.instruccion {
+  color: #555;
+}
+
+.sin-conexion {
+  color: var(--color-alerta);
+  font-weight: 600;
+}
+
+.pagada {
+  display: grid;
+  place-content: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-5);
+  background: var(--color-exito);
+  color: #fff;
+  border-radius: var(--radio);
+
+  .check {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2.2rem;
+    letter-spacing: 0.06em;
+    margin: 0;
+  }
+
+  .monto-pagado {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+  }
+}
+
+.expirada h1 {
+  color: var(--color-alerta);
+}
+
+.no-existe h1 {
+  color: var(--color-error);
+}
