@@ -83,15 +83,13 @@ describe('PaginaComprobante', () => {
 
   it('una orden sin pagar (422) muestra el mensaje del backend', () => {
     const fixture = crear();
-    http
-      .expectOne('/api/ordenes/orden-1/comprobante')
-      .flush(
-        {
-          mensaje:
-            'Una orden en estado PENDIENTE_PAGO no tiene comprobante: solo las pagadas o liquidadas',
-        },
-        { status: 422, statusText: 'Unprocessable Entity' },
-      );
+    http.expectOne('/api/ordenes/orden-1/comprobante').flush(
+      {
+        mensaje:
+          'Una orden en estado PENDIENTE_PAGO no tiene comprobante: solo las pagadas o liquidadas',
+      },
+      { status: 422, statusText: 'Unprocessable Entity' },
+    );
     fixture.detectChanges();
 
     expect(

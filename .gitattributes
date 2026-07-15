@@ -1,0 +1,3 @@
+# Fin de linea consistente (LF) sin importar el SO: evita que cada checkout
+# en Windows dispare falsos positivos de "sin formatear" en Prettier/CI.
+* text=auto eol=lf
