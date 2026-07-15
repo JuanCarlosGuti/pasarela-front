@@ -24,7 +24,7 @@ completa **para** construir con las mismas reglas que el backend.
 - Documentación completa: CLAUDE.md, docs/01-04, 4 ADRs, gestión 01-03.
 - `npm test` y `npm run build` en verde.
 
-### ⬜ TF-002 — CI y calidad automática
+### ✅ TF-002 — CI y calidad automática
 
 **Como** Dev **quiero** lint + formato + pruebas en cada push **para** que
 `develop` y `main` no se degraden.
