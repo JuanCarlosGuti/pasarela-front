@@ -94,3 +94,92 @@
   border-radius: var(--radio);
   cursor: pointer;
 }
+
+// HUF-004: desenlaces inconfundibles (docs/04)
+.qr-imagen {
+  max-width: 320px;
+  margin: var(--espacio-3) auto;
+  padding: var(--espacio-2);
+  background: #fff;
+  border-radius: var(--radio);
+
+  ::ng-deep svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.cuenta {
+  font-weight: 600;
+  color: var(--color-alerta);
+}
+
+.sin-conexion {
+  color: var(--color-alerta);
+  font-weight: 600;
+}
+
+.pagada {
+  min-height: 70vh;
+  display: grid;
+  place-content: center;
+  gap: var(--espacio-2);
+  text-align: center;
+  background: var(--color-exito);
+  color: #fff;
+  border-radius: var(--radio);
+  padding: var(--espacio-5);
+
+  .check {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    letter-spacing: 0.06em;
+    margin: 0;
+  }
+
+  .monto-pagado {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  .nuevo {
+    margin-top: var(--espacio-4);
+    padding: var(--espacio-3) var(--espacio-4);
+    min-height: 44px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-exito);
+    background: #fff;
+    border: none;
+    border-radius: var(--radio);
+    cursor: pointer;
+  }
+}
+
+.expirada {
+  text-align: center;
+  padding: var(--espacio-5) var(--espacio-3);
+
+  h1 {
+    color: var(--color-alerta);
+  }
+
+  .cobrar-de-nuevo {
+    margin-top: var(--espacio-3);
+    padding: var(--espacio-3) var(--espacio-4);
+    min-height: 44px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--color-primario);
+    border: none;
+    border-radius: var(--radio);
+    cursor: pointer;
+  }
+}
