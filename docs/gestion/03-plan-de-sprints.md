@@ -50,14 +50,14 @@ suite Playwright completa en CI.
 
 ## Estado actual
 
-| Sprint                      | Estado       | Tag |
-| --------------------------- | ------------ | --- |
+| Sprint                      | Estado       | Tag       |
+| --------------------------- | ------------ | --------- |
 | F0 — Fundaciones            | ✅ cerrado   | `vF0.0.1` |
-| F1 — Autenticación          | ⬜ pendiente | —   |
-| F2 — La caja                | ⬜ pendiente | —   |
-| F3 — Pagador + onboarding   | ⬜ pendiente | —   |
-| F4 — Tablero                | ⬜ pendiente | —   |
-| F5 — Admin + endurecimiento | ⬜ pendiente | —   |
+| F1 — Autenticación          | ⬜ pendiente | —         |
+| F2 — La caja                | ⬜ pendiente | —         |
+| F3 — Pagador + onboarding   | ⬜ pendiente | —         |
+| F4 — Tablero                | ⬜ pendiente | —         |
+| F5 — Admin + endurecimiento | ⬜ pendiente | —         |
 
 > Actualizar esta tabla al abrir/cerrar cada sprint (commit `docs(gestion)`).
 
