@@ -154,7 +154,7 @@ que quedó confirmado.
 - Referencia inexistente → "Este pago no existe" (404 amable).
 - Sin datos del comercio ni internos; sin sesión.
 
-### 🔵 HUF-007 — Registro del comercio
+### ✅ HUF-007 — Registro del comercio
 
 **Como** Dueño **quiero** registrarme en minutos **para** empezar la
 verificación.
