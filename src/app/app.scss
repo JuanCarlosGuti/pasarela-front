@@ -19,6 +19,24 @@
   margin: 0 auto;
 }
 
+.navegacion {
+  margin-left: var(--espacio-4);
+  display: flex;
+  gap: var(--espacio-3);
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--espacio-2) 0;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration: underline;
+    }
+  }
+}
+
 .salir {
   margin-left: auto;
   padding: var(--espacio-2) var(--espacio-3);
