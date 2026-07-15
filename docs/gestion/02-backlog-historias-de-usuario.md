@@ -36,7 +36,7 @@ completa **para** construir con las mismas reglas que el backend.
   `feature/**`; badge en README.
 - **Dado** un push con una prueba rota, **entonces** el CI falla.
 
-### ⬜ TF-003 — Tokens de diseño y esqueleto de navegación
+### ✅ TF-003 — Tokens de diseño y esqueleto de navegación
 
 **Como** Dev **quiero** los tokens de `docs/04` y el layout raíz mobile-first
 **para** que ninguna pantalla invente estilos.
