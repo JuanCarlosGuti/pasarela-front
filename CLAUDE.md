@@ -68,6 +68,7 @@ src/app/
 ```
 
 Reglas:
+
 - `caracteristicas/*` no se importan entre sí; comparten solo vía `nucleo/` y
   `compartido/` (misma filosofía de fronteras del backend).
 - Rutas con lazy loading por característica.
@@ -104,16 +105,16 @@ Detalle completo en `docs/02-arquitectura.md`.
 
 ## 7. Documentación (fuente de verdad)
 
-| Documento | Ruta |
-|---|---|
-| Visión y alcance del MVP front | `docs/01-vision-y-alcance-mvp.md` |
-| Arquitectura | `docs/02-arquitectura.md` |
-| Guía de estilo / pruebas | `docs/03-guia-estilo.md` |
-| Diseño UI (tokens, mobile-first, accesibilidad) | `docs/04-diseno-ui.md` |
-| Decisiones de arquitectura | `docs/adr/` |
-| Flujo de trabajo Git | `docs/gestion/01-flujo-de-trabajo-git.md` |
-| **Backlog de historias (fuente de verdad)** | `docs/gestion/02-backlog-historias-de-usuario.md` |
-| Plan de sprints (por alcance) | `docs/gestion/03-plan-de-sprints.md` |
+| Documento                                       | Ruta                                              |
+| ----------------------------------------------- | ------------------------------------------------- |
+| Visión y alcance del MVP front                  | `docs/01-vision-y-alcance-mvp.md`                 |
+| Arquitectura                                    | `docs/02-arquitectura.md`                         |
+| Guía de estilo / pruebas                        | `docs/03-guia-estilo.md`                          |
+| Diseño UI (tokens, mobile-first, accesibilidad) | `docs/04-diseno-ui.md`                            |
+| Decisiones de arquitectura                      | `docs/adr/`                                       |
+| Flujo de trabajo Git                            | `docs/gestion/01-flujo-de-trabajo-git.md`         |
+| **Backlog de historias (fuente de verdad)**     | `docs/gestion/02-backlog-historias-de-usuario.md` |
+| Plan de sprints (por alcance)                   | `docs/gestion/03-plan-de-sprints.md`              |
 
 Reglas derivadas: al iniciar una historia ⬜→🔵 y rama `feature/HUF-xxx`; al
 mergearla con DoD cumplida 🔵→✅ (`docs(gestion): completar HUF-xxx`); cierre de
@@ -131,7 +132,7 @@ sprint = merge `develop`→`main` + tag `vF0.<sprint>.0` + retro de 3 líneas.
 
 ## 9. Estado actual
 
-- [x] **Sprint F0:** esqueleto Angular 22 + documentación completa + CI + repo
+- [x] **Sprint F0:** fundaciones — esqueleto, docs, CI, tokens, rutas — `vF0.0.1`
 - [ ] **Sprint F1:** autenticación (login JWT, sesión, guardas por rol)
 - [ ] **Sprint F2:** la caja de cobro (monto → QR → polling → PAGADO ✓)
 - [ ] **Sprint F3:** página del pagador + registro de comercio

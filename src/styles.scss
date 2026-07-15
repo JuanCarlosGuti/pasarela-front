@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+// Estilos globales: base mínima mobile-first sobre los tokens de docs/04.
+@use './app/compartido/estilos/tokens';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Accesibilidad: el foco SIEMPRE se ve (docs/04)
+:focus-visible {
+  outline: 3px solid var(--color-primario);
+  outline-offset: 2px;
+}
+
+button {
+  font: inherit;
+}
