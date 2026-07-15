@@ -1,0 +1,51 @@
+// Tarjetas grandes, legibles al vuelo (docs/04).
+.tarjetas {
+  display: grid;
+  gap: var(--espacio-3);
+  grid-template-columns: 1fr;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.tarjeta {
+  padding: var(--espacio-4);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  text-align: center;
+
+  h2 {
+    margin: 0 0 var(--espacio-2);
+    font-size: 1rem;
+    color: #555;
+    font-weight: 600;
+  }
+}
+
+.total {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.cantidad {
+  color: #666;
+  margin: var(--espacio-1) 0 0;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.reintentar {
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio);
+  font-weight: 700;
+  cursor: pointer;
+}

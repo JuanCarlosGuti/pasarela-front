@@ -1,6 +1,10 @@
 <header class="cabecera">
   <span class="marca">Pasarela</span>
   @if (sesion.estaAutenticada()) {
+    <nav class="navegacion">
+      <a routerLink="/caja">Caja</a>
+      <a routerLink="/tablero">Tu negocio</a>
+    </nav>
     <button type="button" class="salir" (click)="salir()">Salir</button>
   }
 </header>

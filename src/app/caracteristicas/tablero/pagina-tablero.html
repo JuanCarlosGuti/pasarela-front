@@ -1,0 +1,21 @@
+<h1>Tu negocio</h1>
+
+@if (cargando()) {
+  <p>Cargando…</p>
+} @else if (error(); as mensaje) {
+  <p role="alert" class="error">{{ mensaje }}</p>
+  <button type="button" class="reintentar" (click)="cargar()">Reintentar</button>
+} @else if (resumen(); as datos) {
+  <div class="tarjetas">
+    <section class="tarjeta">
+      <h2>Hoy</h2>
+      <p class="total">{{ formatear(datos.dia.total) }}</p>
+      <p class="cantidad">{{ datos.dia.cantidad }} ventas</p>
+    </section>
+    <section class="tarjeta">
+      <h2>Este mes</h2>
+      <p class="total">{{ formatear(datos.mes.total) }}</p>
+      <p class="cantidad">{{ datos.mes.cantidad }} ventas</p>
+    </section>
+  </div>
+}
