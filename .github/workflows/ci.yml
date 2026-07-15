@@ -1,0 +1,25 @@
+# CI del frontend (TF-002): pruebas y build en cada push. El lint se suma en
+# cuanto TF-002 configure angular-eslint (este pipeline falla si algo se rompe,
+# igual que el verify del backend).
+name: ci
+
+on:
+  push:
+    branches: [main, develop, "feature/**"]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Pruebas (Vitest)
+        run: npm test -- --watch=false
+      - name: Build de producción
+        run: npm run build
