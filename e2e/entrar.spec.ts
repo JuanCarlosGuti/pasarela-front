@@ -46,6 +46,7 @@ test.describe('HUF-001: iniciar sesión (contra el backend real)', () => {
     await page.getByRole('button', { name: 'Entrar' }).click();
 
     await expect(page).toHaveURL(/\/caja/);
-    await expect(page.getByRole('heading', { name: 'La caja' })).toBeVisible();
+    // la caja real (HUF-003): el teclado con COBRAR es la señal de haber llegado
+    await expect(page.getByRole('button', { name: 'COBRAR' })).toBeVisible();
   });
 });

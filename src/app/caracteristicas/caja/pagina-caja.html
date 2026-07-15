@@ -1,0 +1,48 @@
+@switch (caja.fase()) {
+  @case ('digitando') {
+    <section class="digitar">
+      <p class="monto" aria-live="polite">{{ caja.montoFormateado() }}</p>
+
+      @if (caja.error(); as mensaje) {
+        <p role="alert" class="error">{{ mensaje }}</p>
+      }
+
+      <div class="teclado">
+        @for (digito of digitos; track digito) {
+          <button type="button" (click)="caja.digitar(digito)">{{ digito }}</button>
+        }
+        <button type="button" class="borrar" (click)="caja.borrar()" aria-label="Borrar">⌫</button>
+        <button type="button" (click)="caja.digitar('0')">0</button>
+        <button
+          type="button"
+          class="cobrar"
+          [disabled]="caja.monto() === 0"
+          (click)="caja.cobrar()"
+        >
+          COBRAR
+        </button>
+      </div>
+    </section>
+  }
+  @case ('creando') {
+    <section class="creando">
+      <p class="monto">{{ caja.montoFormateado() }}</p>
+      <p>Creando cobro…</p>
+    </section>
+  }
+  @case ('esperando') {
+    <section class="esperando">
+      <p class="monto">{{ caja.montoFormateado() }}</p>
+      <p class="instruccion">Muestra este código al cliente</p>
+
+      <div class="qr" aria-label="Código de pago">
+        <code>{{ caja.orden()?.qr?.contenido }}</code>
+      </div>
+
+      <a class="deeplink" [href]="caja.orden()?.qr?.deeplink">Pagar desde la app</a>
+      <p class="referencia">Referencia: {{ caja.orden()?.referencia }}</p>
+
+      <button type="button" class="cancelar" (click)="caja.limpiar()">Volver a la caja</button>
+    </section>
+  }
+}
