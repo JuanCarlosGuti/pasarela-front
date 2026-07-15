@@ -35,6 +35,21 @@ export class SesionService {
     this.tokenActual.set(null);
     this.claims.set({});
   }
+
+  /** El token venció (401 del backend): cierra y deja el aviso para el login. */
+  marcarExpirada(): void {
+    this.cerrar();
+    this.avisoDeExpiracion.set(true);
+  }
+
+  /** Lee y consume el aviso (se muestra UNA vez en la pantalla de entrar). */
+  consumirAvisoDeExpiracion(): boolean {
+    const habia = this.avisoDeExpiracion();
+    this.avisoDeExpiracion.set(false);
+    return habia;
+  }
+
+  private readonly avisoDeExpiracion = signal(false);
 }
 
 /** Payload del JWT (base64url) → claims; null si el token es ilegible. */
