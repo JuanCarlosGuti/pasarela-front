@@ -172,7 +172,7 @@ verificación.
 
 ## Épica EF4 — El tablero _(Sprint F4)_
 
-### ⬜ HUF-008 — Ventas de hoy y del mes
+### 🔵 HUF-008 — Ventas de hoy y del mes
 
 **Como** Dueño **quiero** ver cuánto he vendido hoy y en el mes **para**
 tener el pulso del negocio.

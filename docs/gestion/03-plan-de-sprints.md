@@ -56,7 +56,7 @@ suite Playwright completa en CI.
 | F1 — Autenticación          | ✅ cerrado   | `vF0.1.0` |
 | F2 — La caja                | ✅ cerrado   | `vF0.2.0` |
 | F3 — Pagador + onboarding   | ✅ cerrado   | `vF0.3.0` |
-| F4 — Tablero                | ⬜ pendiente | —         |
+| F4 — Tablero                | 🔵 en curso  | —         |
 | F5 — Admin + endurecimiento | ⬜ pendiente | —         |
 
 > Actualizar esta tabla al abrir/cerrar cada sprint (commit `docs(gestion)`).
