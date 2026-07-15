@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 import { HistorialDeVentas } from './historial-de-ventas';
 
 /** HUF-009: historial paginado con filtros de fecha, del tablero. */
@@ -10,7 +11,7 @@ describe('HistorialDeVentas', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HistorialDeVentas],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])],
     }).compileComponents();
     http = TestBed.inject(HttpTestingController);
   });

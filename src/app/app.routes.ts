@@ -38,6 +38,13 @@ export const routes: Routes = [
       import('./caracteristicas/tablero/pagina-tablero').then((m) => m.PaginaTablero),
   },
   {
+    path: 'comprobante/:id',
+    title: 'Comprobante · Pasarela',
+    canActivate: [guardaDeRol('COMERCIO')],
+    loadComponent: () =>
+      import('./caracteristicas/comprobante/pagina-comprobante').then((m) => m.PaginaComprobante),
+  },
+  {
     path: 'admin',
     title: 'Administración · Pasarela',
     canActivate: [guardaDeRol('ADMIN')],

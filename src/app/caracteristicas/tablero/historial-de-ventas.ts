@@ -1,7 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { PaginaVentas, VentaResumen, VentasApi } from '../../nucleo/api/ventas-api';
+
+const ESTADOS_CON_COMPROBANTE = new Set(['PAGO_DETECTADO', 'CONVERTIDA', 'LIQUIDADA']);
 
 interface EstadoVisual {
   etiqueta: string;
@@ -26,7 +29,7 @@ const ESTADOS: Record<string, EstadoVisual> = {
  */
 @Component({
   selector: 'app-historial-de-ventas',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './historial-de-ventas.html',
   styleUrl: './historial-de-ventas.scss',
 })
@@ -120,6 +123,11 @@ export class HistorialDeVentas implements OnInit {
 
   protected estadoVisual(estado: string): EstadoVisual {
     return ESTADOS[estado] ?? { etiqueta: estado, clase: 'desconocido' };
+  }
+
+  /** Solo las órdenes pagadas/liquidadas tienen comprobante (HUF-011); las demás darían 422. */
+  protected tieneComprobante(estado: string): boolean {
+    return ESTADOS_CON_COMPROBANTE.has(estado);
   }
 
   protected formatearMonto(monto: number): string {

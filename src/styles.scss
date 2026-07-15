@@ -30,3 +30,10 @@ body {
 button {
   font: inherit;
 }
+
+// Vista imprimible del comprobante (HUF-011): sin cabecera de la app.
+@media print {
+  .cabecera {
+    display: none;
+  }
+}

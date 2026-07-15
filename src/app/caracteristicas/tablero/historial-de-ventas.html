@@ -38,6 +38,9 @@
             <span class="estado {{ estadoVisual(orden.estado).clase }}">
               {{ estadoVisual(orden.estado).etiqueta }}
             </span>
+            @if (tieneComprobante(orden.estado)) {
+              <a class="comprobante" [routerLink]="['/comprobante', orden.id]">Comprobante</a>
+            }
           </li>
         }
       </ul>
@@ -49,6 +52,7 @@
             <th>Referencia</th>
             <th>Monto</th>
             <th>Estado</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +65,11 @@
                 <span class="estado {{ estadoVisual(orden.estado).clase }}">
                   {{ estadoVisual(orden.estado).etiqueta }}
                 </span>
+              </td>
+              <td>
+                @if (tieneComprobante(orden.estado)) {
+                  <a class="comprobante" [routerLink]="['/comprobante', orden.id]">Comprobante</a>
+                }
               </td>
             </tr>
           }

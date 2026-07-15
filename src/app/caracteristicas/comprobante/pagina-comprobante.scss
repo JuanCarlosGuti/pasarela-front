@@ -1,0 +1,105 @@
+// Comprobante (HUF-011): pantalla normal + vista imprimible (print CSS).
+.comprobante {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--espacio-4);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espacio-4);
+
+  h1 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+}
+
+.imprimir {
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.detalle {
+  display: grid;
+  gap: var(--espacio-3);
+  margin: 0;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--color-borde);
+    padding-bottom: var(--espacio-2);
+  }
+
+  dt {
+    color: #666;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    text-align: right;
+  }
+}
+
+.monto {
+  font-size: 1.1rem;
+}
+
+.estado {
+  padding: 2px var(--espacio-2);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+
+  &.pagado {
+    background: var(--color-exito);
+  }
+  &.desconocido {
+    background: var(--color-error);
+  }
+}
+
+.pie {
+  margin-top: var(--espacio-4);
+  color: #666;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+// Vista imprimible: sin cabecera de la app, sin botón, todo en negro sobre blanco.
+@media print {
+  :host {
+    display: block;
+  }
+
+  .imprimir {
+    display: none;
+  }
+
+  .comprobante {
+    max-width: none;
+    padding: 0;
+  }
+
+  .estado {
+    color: #000;
+    background: none !important;
+    border: 1px solid #000;
+  }
+}
