@@ -12,7 +12,7 @@
 
 ## Épica EF0 — Fundaciones *(Sprint F0)*
 
-### 🔵 TF-001 — Esqueleto, repo y documentación
+### ✅ TF-001 — Esqueleto, repo y documentación
 **Como** Dev **quiero** el proyecto Angular 22 con repo propio y documentación
 completa **para** construir con las mismas reglas que el backend.
 
