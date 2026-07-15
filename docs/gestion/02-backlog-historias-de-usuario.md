@@ -141,7 +141,7 @@ responder "¿sí te llegó?" sin salir de la caja.
 
 ## Épica EF3 — Pagador y onboarding _(Sprint F3)_
 
-### ⬜ HUF-006 — Página pública del pagador
+### 🔵 HUF-006 — Página pública del pagador
 
 **Como** Pagador **quiero** ver el estado de mi pago en vivo **para** saber
 que quedó confirmado.
