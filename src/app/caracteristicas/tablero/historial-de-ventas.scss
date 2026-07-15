@@ -1,0 +1,169 @@
+// Historial (docs/04): móvil = tarjetas, escritorio = tabla — mismo dato,
+// dos marcaciones, visibilidad decidida solo por CSS.
+.historial {
+  margin-top: var(--espacio-5);
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-3);
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  input {
+    padding: var(--espacio-2);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+  }
+}
+
+.filtrar {
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-primario);
+  color: #fff;
+  border: none;
+  border-radius: var(--radio);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vacio {
+  color: #666;
+  text-align: center;
+  padding: var(--espacio-4) 0;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.estado {
+  padding: 2px var(--espacio-2);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+
+  &.pagado {
+    background: var(--color-exito);
+  }
+  &.pendiente {
+    background: #888;
+  }
+  &.expirado {
+    background: var(--color-alerta);
+  }
+  &.alerta,
+  &.desconocido {
+    background: var(--color-error);
+  }
+}
+
+// Móvil: tarjetas visibles, tabla oculta.
+.tarjetas-movil {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espacio-2);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    padding: var(--espacio-3);
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+  }
+
+  .fecha {
+    color: #666;
+    font-size: 0.85rem;
+  }
+
+  .monto {
+    font-weight: 700;
+    margin-left: auto;
+  }
+
+  .comprobante {
+    color: var(--color-primario);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+}
+
+.tabla-escritorio .comprobante {
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tabla-escritorio {
+  display: none;
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: left;
+    padding: var(--espacio-2);
+    border-bottom: 1px solid var(--color-borde);
+  }
+}
+
+@media (min-width: 720px) {
+  .tarjetas-movil {
+    display: none;
+  }
+  .tabla-escritorio {
+    display: table;
+  }
+}
+
+.paginacion {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--espacio-3);
+
+  button {
+    padding: var(--espacio-2) var(--espacio-3);
+    min-height: 44px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.descargar-csv {
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-superficie);
+  color: var(--color-primario);
+  border: 1px solid var(--color-primario);
+  border-radius: var(--radio);
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}

@@ -180,7 +180,7 @@ tener el pulso del negocio.
 **Criterios:** tarjetas grandes (total y cantidad, día/mes) desde
 `/api/ventas/resumen`; actualiza al volver a la pestaña; estados de carga/error.
 
-### ⬜ HUF-009 — Historial de movimientos
+### ✅ HUF-009 — Historial de movimientos
 
 **Como** Dueño **quiero** revisar mis órdenes con filtros de fecha **para**
 verificar cualquier venta.
@@ -188,14 +188,14 @@ verificar cualquier venta.
 **Criterios:** lista paginada (`/api/ventas`), filtros desde/hasta con rangos
 inválidos → mensaje del backend; móvil = tarjetas, escritorio = tabla.
 
-### ⬜ HUF-010 — Exportar CSV
+### ✅ HUF-010 — Exportar CSV
 
 **Como** Dueño **quiero** descargar el CSV **para** entregárselo al contador.
 
 **Criterios:** botón con rango de fechas → descarga `/api/ventas/exportar`
 (el backend ya emite BOM+`;`); nombre `movimientos.csv`; error claro si falla.
 
-### ⬜ HUF-011 — Comprobante de venta
+### ✅ HUF-011 — Comprobante de venta
 
 **Como** Dueño **quiero** el comprobante de una venta **para** soportarla
 ante el cliente y el contador.

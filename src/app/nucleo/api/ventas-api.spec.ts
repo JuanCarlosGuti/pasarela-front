@@ -34,10 +34,43 @@ describe('VentasApi', () => {
   });
 
   it('acepta un tamaño de página explícito', () => {
-    api.listar(20).subscribe();
+    api.listar({ tamano: 20 }).subscribe();
     const peticion = http.expectOne((req) => req.url === '/api/ventas');
     expect(peticion.request.params.get('tamano')).toBe('20');
     peticion.flush({ ordenes: [], totalElementos: 0, pagina: 0, tamano: 20 });
+  });
+
+  it('acepta desde/hasta/pagina para el historial filtrado (HUF-009)', () => {
+    api.listar({ desde: '2026-07-01', hasta: '2026-07-15', pagina: 2, tamano: 10 }).subscribe();
+
+    const peticion = http.expectOne((req) => req.url === '/api/ventas');
+    expect(peticion.request.params.get('desde')).toBe('2026-07-01');
+    expect(peticion.request.params.get('hasta')).toBe('2026-07-15');
+    expect(peticion.request.params.get('pagina')).toBe('2');
+    expect(peticion.request.params.get('tamano')).toBe('10');
+    peticion.flush({ ordenes: [], totalElementos: 0, pagina: 2, tamano: 10 });
+  });
+
+  it('exporta el CSV con GET /api/ventas/exportar como blob (HUF-010)', () => {
+    let respuesta: Blob | undefined;
+    api.exportar({ desde: '2026-07-01', hasta: '2026-07-15' }).subscribe((r) => (respuesta = r));
+
+    const peticion = http.expectOne((req) => req.url === '/api/ventas/exportar');
+    expect(peticion.request.method).toBe('GET');
+    expect(peticion.request.params.get('desde')).toBe('2026-07-01');
+    expect(peticion.request.params.get('hasta')).toBe('2026-07-15');
+    expect(peticion.request.responseType).toBe('blob');
+
+    const csv = new Blob(['contenido'], { type: 'text/csv' });
+    peticion.flush(csv);
+    expect(respuesta).toBe(csv);
+  });
+
+  it('exporta sin fechas (el backend decide el rango)', () => {
+    api.exportar().subscribe();
+    const peticion = http.expectOne((req) => req.url === '/api/ventas/exportar');
+    expect(peticion.request.params.has('desde')).toBe(false);
+    peticion.flush(new Blob());
   });
 
   it('consulta el resumen del día y del mes con GET /api/ventas/resumen', () => {

@@ -1,0 +1,51 @@
+<section class="comprobante">
+  @if (cargando()) {
+    <p>Cargando…</p>
+  } @else if (error(); as mensaje) {
+    <p role="alert" class="error">{{ mensaje }}</p>
+  } @else if (comprobante(); as datos) {
+    <header class="encabezado">
+      <h1>Comprobante de venta</h1>
+      <button type="button" class="imprimir" (click)="imprimir()">Imprimir</button>
+    </header>
+
+    <dl class="detalle">
+      <div>
+        <dt>Número</dt>
+        <dd>{{ datos.numeroComprobante }}</dd>
+      </div>
+      <div>
+        <dt>Referencia</dt>
+        <dd>{{ datos.referencia }}</dd>
+      </div>
+      <div>
+        <dt>Monto</dt>
+        <dd class="monto">{{ formatearMonto(datos.monto) }}</dd>
+      </div>
+      <div>
+        <dt>Estado</dt>
+        <dd>
+          <span class="estado {{ estadoVisual(datos.estado).clase }}">
+            {{ estadoVisual(datos.estado).etiqueta }}
+          </span>
+        </dd>
+      </div>
+      <div>
+        <dt>Pago detectado</dt>
+        <dd>{{ formatearFecha(datos.pagoDetectadoEn) }}</dd>
+      </div>
+      <div>
+        <dt>Liquidación</dt>
+        <dd>
+          @if (datos.liquidadaEn) {
+            {{ formatearFecha(datos.liquidadaEn) }}
+          } @else {
+            Aún no liquidada
+          }
+        </dd>
+      </div>
+    </dl>
+
+    <p class="pie">Emitido el {{ formatearFecha(datos.emitidoEn) }} · Pasarela</p>
+  }
+</section>

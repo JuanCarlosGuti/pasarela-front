@@ -27,6 +27,14 @@ export interface ResumenDeVentas {
   mes: TotalDeVentas;
 }
 
+export interface FiltrosDeVentas {
+  /** Fechas 'yyyy-MM-dd'; sin ellas, el backend decide el rango (mes en curso). */
+  desde?: string;
+  hasta?: string;
+  pagina?: number;
+  tamano?: number;
+}
+
 /**
  * Cliente del historial de ventas del backend. Sin desde/hasta: el backend
  * decide el rango (mes en curso, zona Colombia) — el front no reimplementa
@@ -36,13 +44,32 @@ export interface ResumenDeVentas {
 export class VentasApi {
   private readonly http = inject(HttpClient);
 
-  listar(tamano = 20): Observable<PaginaVentas> {
-    const params = new HttpParams().set('pagina', 0).set('tamano', tamano);
+  listar(filtros: FiltrosDeVentas = {}): Observable<PaginaVentas> {
+    const { desde, hasta, pagina = 0, tamano = 20 } = filtros;
+    let params = new HttpParams().set('pagina', pagina).set('tamano', tamano);
+    if (desde) {
+      params = params.set('desde', desde);
+    }
+    if (hasta) {
+      params = params.set('hasta', hasta);
+    }
     return this.http.get<PaginaVentas>('/api/ventas', { params });
   }
 
   /** Ventas del día y del mes en curso (zona Colombia, decide el backend). */
   resumen(): Observable<ResumenDeVentas> {
     return this.http.get<ResumenDeVentas>('/api/ventas/resumen');
+  }
+
+  /** CSV contador-ready (BOM + ';', lo arma el backend) como blob descargable. */
+  exportar(filtros: Pick<FiltrosDeVentas, 'desde' | 'hasta'> = {}): Observable<Blob> {
+    let params = new HttpParams();
+    if (filtros.desde) {
+      params = params.set('desde', filtros.desde);
+    }
+    if (filtros.hasta) {
+      params = params.set('hasta', filtros.hasta);
+    }
+    return this.http.get('/api/ventas/exportar', { params, responseType: 'blob' });
   }
 }
