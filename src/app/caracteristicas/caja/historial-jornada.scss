@@ -1,0 +1,82 @@
+// HUF-005: lista compacta, legible al vuelo (docs/04).
+.lista h2,
+.detalle h2 {
+  margin-top: 0;
+}
+
+.vacio {
+  color: #666;
+  text-align: center;
+  padding: var(--espacio-4) 0;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.ordenes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+.orden button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  text-align: left;
+  cursor: pointer;
+
+  .hora {
+    color: #666;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .monto {
+    font-weight: 700;
+    margin-left: auto;
+  }
+}
+
+.estado {
+  padding: 2px var(--espacio-2);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+
+  &.pagado {
+    background: var(--color-exito);
+  }
+  &.pendiente {
+    background: #888;
+  }
+  &.expirado {
+    background: var(--color-alerta);
+  }
+  &.alerta,
+  &.desconocido {
+    background: var(--color-error);
+  }
+}
+
+.cerrar-detalle {
+  background: none;
+  border: none;
+  color: var(--color-primario);
+  font-weight: 700;
+  padding: var(--espacio-2) 0;
+  cursor: pointer;
+}
+
+.transiciones {
+  padding-left: var(--espacio-3);
+}

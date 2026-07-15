@@ -1,18 +1,5 @@
 import { test, expect } from '@playwright/test';
-
-const API = 'http://localhost:8080';
-
-function nitAleatorio(): string {
-  const pesos = [3, 7, 13, 17, 19, 23, 29, 37, 41];
-  const base = String(Math.floor(Math.random() * 800_000_000) + 100_000_000);
-  const suma = base
-    .split('')
-    .reverse()
-    .reduce((acumulado, digito, indice) => acumulado + Number(digito) * pesos[indice], 0);
-  const resto = suma % 11;
-  const dv = resto < 2 ? resto : 11 - resto;
-  return `${base}-${dv}`;
-}
+import { API, nitAleatorio } from './ayudas';
 
 test.describe('HUF-002: sesión y guardas (contra el backend real)', () => {
   test('sin sesión, la caja redirige a entrar', async ({ page }) => {

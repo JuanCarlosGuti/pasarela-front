@@ -89,7 +89,7 @@ no quedar expuesto ni bloqueado sin explicación.
 
 ## Épica EF2 — La caja _(Sprint F2 — el corazón)_
 
-### ⬜ HUF-003 — Crear un cobro
+### ✅ HUF-003 — Crear un cobro
 
 **Como** Cajero **quiero** digitar un monto y tocar COBRAR **para** generar el
 QR en segundos.
@@ -106,7 +106,7 @@ QR en segundos.
   Reintenta" con botón de reintento (sin orden fantasma — el backend garantiza).
 - Pruebas: componente (formato/validación) + servicio (estados) + E2E feliz.
 
-### ⬜ HUF-004 — Esperar el pago y ver PAGADO ✓
+### ✅ HUF-004 — Esperar el pago y ver PAGADO ✓
 
 **Como** Cajero **quiero** ver el QR y enterarme al instante del pago
 **para** entregar el producto sin dudar.
@@ -125,7 +125,7 @@ QR en segundos.
 - Salir de la pantalla detiene el polling (verificado en prueba).
 - E2E rey: cobrar → webhook del simulador → PAGADO ✓ en pantalla.
 
-### ⬜ HUF-005 — Historia de la sesión de caja
+### ✅ HUF-005 — Historia de la sesión de caja
 
 **Como** Cajero **quiero** ver los últimos cobros de mi jornada **para**
 responder "¿sí te llegó?" sin salir de la caja.

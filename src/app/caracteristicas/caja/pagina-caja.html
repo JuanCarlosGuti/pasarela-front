@@ -1,0 +1,90 @@
+@switch (caja.fase()) {
+  @case ('digitando') {
+    @if (mostrandoHistorial()) {
+      <app-historial-jornada />
+      <button type="button" class="volver-a-cobrar" (click)="mostrandoHistorial.set(false)">
+        Volver a cobrar
+      </button>
+    } @else {
+      <section class="digitar">
+        <p class="monto" aria-live="polite">{{ caja.montoFormateado() }}</p>
+
+        @if (caja.error(); as mensaje) {
+          <p role="alert" class="error">{{ mensaje }}</p>
+        }
+
+        <div class="teclado">
+          @for (digito of digitos; track digito) {
+            <button type="button" (click)="caja.digitar(digito)">{{ digito }}</button>
+          }
+          <button type="button" class="borrar" (click)="caja.borrar()" aria-label="Borrar">
+            ⌫
+          </button>
+          <button type="button" (click)="caja.digitar('0')">0</button>
+          <button
+            type="button"
+            class="cobrar"
+            [disabled]="caja.monto() === 0"
+            (click)="caja.cobrar()"
+          >
+            COBRAR
+          </button>
+        </div>
+
+        <button type="button" class="ver-historial" (click)="mostrandoHistorial.set(true)">
+          Ver cobros de hoy
+        </button>
+      </section>
+    }
+  }
+  @case ('creando') {
+    <section class="creando">
+      <p class="monto">{{ caja.montoFormateado() }}</p>
+      <p>Creando cobro…</p>
+    </section>
+  }
+  @case ('esperando') {
+    <section class="esperando">
+      <p class="monto">{{ caja.montoFormateado() }}</p>
+      <p class="instruccion">Muestra este código al cliente</p>
+
+      @if (qrSvg(); as svg) {
+        <div class="qr-imagen" aria-label="Código QR de pago" [innerHTML]="svg"></div>
+      } @else {
+        <div class="qr" aria-label="Código de pago">
+          <code>{{ caja.orden()?.qr?.contenido }}</code>
+        </div>
+      }
+
+      <p class="cuenta" aria-live="polite">Expira en {{ caja.cuentaRegresiva() }}</p>
+
+      @if (caja.sinConexion()) {
+        <p class="sin-conexion" role="status">Sin conexión, reintentando…</p>
+      }
+
+      <a class="deeplink" [href]="caja.orden()?.qr?.deeplink">Pagar desde la app</a>
+      <p class="referencia">Referencia: {{ caja.orden()?.referencia }}</p>
+
+      <button type="button" class="cancelar" (click)="caja.limpiar()">Volver a la caja</button>
+    </section>
+  }
+  @case ('pagada') {
+    <section class="pagada" role="status" aria-live="assertive">
+      <p class="check">✓</p>
+      <h1>PAGADO</h1>
+      <p class="monto-pagado">{{ caja.montoFormateado() }}</p>
+      <p class="hora">{{ caja.horaDePago() }}</p>
+      <button type="button" class="nuevo" (click)="caja.limpiar()">Nuevo cobro</button>
+    </section>
+  }
+  @case ('expirada') {
+    <section class="expirada" role="status" aria-live="assertive">
+      <h1>El cobro expiró</h1>
+      <p>Nadie pagó a tiempo. El monto sigue listo.</p>
+      <p class="monto">{{ caja.montoFormateado() }}</p>
+      <button type="button" class="cobrar-de-nuevo" (click)="caja.volverACobrar()">
+        Volver a cobrar
+      </button>
+    </section>
+  }
+}
