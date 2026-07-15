@@ -1,0 +1,62 @@
+@if (registrado(); as comercio) {
+  <section class="exito">
+    <h1>Tu comercio está en verificación</h1>
+    <p>
+      Registramos <strong>{{ comercio.razonSocial }}</strong
+      >. Un administrador va a revisar tus datos — te avisaremos cuando puedas empezar a cobrar.
+    </p>
+    <a routerLink="/entrar">Iniciar sesión</a>
+  </section>
+} @else {
+  <section class="registro">
+    <h1>Registra tu comercio</h1>
+
+    <form [formGroup]="formulario" (submit)="enviar()">
+      <label for="razonSocial">Razón social</label>
+      <input id="razonSocial" name="razonSocial" formControlName="razonSocial" required />
+
+      <label for="nit">NIT</label>
+      <input id="nit" name="nit" formControlName="nit" placeholder="900650321-2" required />
+      @if (nitConDigitoInvalido) {
+        <p class="aviso">El dígito de verificación del NIT no corresponde. Revísalo.</p>
+      }
+
+      <label for="tipo">Tipo de cuenta</label>
+      <select id="tipo" name="tipo" formControlName="tipo" required>
+        <option value="NEQUI">Nequi</option>
+        <option value="AHORROS">Cuenta de ahorros</option>
+        <option value="CORRIENTE">Cuenta corriente</option>
+      </select>
+
+      <label for="numero">Número de cuenta</label>
+      <input id="numero" name="numero" formControlName="numero" required />
+
+      <label for="titular">Titular de la cuenta</label>
+      <input id="titular" name="titular" formControlName="titular" required />
+
+      <label for="email">Correo</label>
+      <input id="email" name="email" type="email" formControlName="email" required />
+
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        name="contrasena"
+        type="password"
+        formControlName="contrasena"
+        required
+      />
+
+      @if (error(); as mensaje) {
+        <p role="alert" class="error">{{ mensaje }}</p>
+      }
+
+      <button type="submit" [disabled]="enviando()">
+        @if (enviando()) {
+          Registrando…
+        } @else {
+          Registrar mi comercio
+        }
+      </button>
+    </form>
+  </section>
+}

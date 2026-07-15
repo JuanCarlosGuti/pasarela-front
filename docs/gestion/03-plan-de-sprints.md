@@ -55,7 +55,7 @@ suite Playwright completa en CI.
 | F0 — Fundaciones            | ✅ cerrado   | `vF0.0.1` |
 | F1 — Autenticación          | ✅ cerrado   | `vF0.1.0` |
 | F2 — La caja                | ✅ cerrado   | `vF0.2.0` |
-| F3 — Pagador + onboarding   | ⬜ pendiente | —         |
+| F3 — Pagador + onboarding   | ✅ cerrado   | `vF0.3.0` |
 | F4 — Tablero                | ⬜ pendiente | —         |
 | F5 — Admin + endurecimiento | ⬜ pendiente | —         |
 
