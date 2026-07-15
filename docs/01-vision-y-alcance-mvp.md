@@ -6,12 +6,12 @@
 
 ## Usuarios y sus momentos de verdad
 
-| Usuario | Momento de verdad | Pantalla |
-|---|---|---|
-| **Cajero/dueño del comercio** | "Digito 25.000, muestro el QR, veo PAGADO ✓ y entrego el café" | La caja |
-| **Pagador** | "Escaneo, pago desde mi app, veo confirmado" | Página pública del pago |
-| **Dueño (fin de mes)** | "¿Cuánto vendí? Le mando el CSV al contador" | Tablero |
-| **Admin (nosotros)** | "Apruebo un comercio en minutos" | Admin |
+| Usuario                       | Momento de verdad                                              | Pantalla                |
+| ----------------------------- | -------------------------------------------------------------- | ----------------------- |
+| **Cajero/dueño del comercio** | "Digito 25.000, muestro el QR, veo PAGADO ✓ y entrego el café" | La caja                 |
+| **Pagador**                   | "Escaneo, pago desde mi app, veo confirmado"                   | Página pública del pago |
+| **Dueño (fin de mes)**        | "¿Cuánto vendí? Le mando el CSV al contador"                   | Tablero                 |
+| **Admin (nosotros)**          | "Apruebo un comercio en minutos"                               | Admin                   |
 
 ## Alcance del MVP (Sprints F0–F5)
 

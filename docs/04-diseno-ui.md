@@ -18,16 +18,16 @@
 
 ## Tokens (en `compartido/estilos/_tokens.scss`)
 
-| Token | Uso | Valor inicial |
-|---|---|---|
-| `--color-primario` | acciones (COBRAR) | `#0d47a1` |
-| `--color-exito` | PAGADO ✓ | `#1b5e20` |
-| `--color-alerta` | expiración próxima | `#e65100` |
-| `--color-error` | fallos | `#b71c1c` |
-| `--color-fondo` / `--color-texto` | base | `#fafafa` / `#1a1a1a` |
-| `--espacio-1..6` | escala de espaciado | 4/8/16/24/32/48 px |
-| `--radio` | esquinas | 12px |
-| Tipografía | sistema (`system-ui`) — sin fuentes externas en MVP | — |
+| Token                             | Uso                                                 | Valor inicial         |
+| --------------------------------- | --------------------------------------------------- | --------------------- |
+| `--color-primario`                | acciones (COBRAR)                                   | `#0d47a1`             |
+| `--color-exito`                   | PAGADO ✓                                            | `#1b5e20`             |
+| `--color-alerta`                  | expiración próxima                                  | `#e65100`             |
+| `--color-error`                   | fallos                                              | `#b71c1c`             |
+| `--color-fondo` / `--color-texto` | base                                                | `#fafafa` / `#1a1a1a` |
+| `--espacio-1..6`                  | escala de espaciado                                 | 4/8/16/24/32/48 px    |
+| `--radio`                         | esquinas                                            | 12px                  |
+| Tipografía                        | sistema (`system-ui`) — sin fuentes externas en MVP | —                     |
 
 > Los valores son un punto de partida honesto, no una marca definitiva; se
 > ajustan cuando exista identidad visual. Lo innegociable es que TODO pase

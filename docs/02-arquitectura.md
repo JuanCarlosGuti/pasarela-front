@@ -25,6 +25,7 @@ src/app/
 
 **Reglas de dependencia** (se revisan en PR; si duelen, se automatizan con
 eslint-plugin-boundaries):
+
 - `caracteristicas/*` NUNCA se importan entre sí.
 - `nucleo/` y `compartido/` no importan de `caracteristicas/`.
 - Los clientes de `nucleo/api` son el ÚNICO lugar con URLs del backend.
