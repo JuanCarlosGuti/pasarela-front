@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CajaService } from './caja.service';
 
-// Placeholder de TF-003: la pantalla real llega en el Sprint F2.
+/**
+ * La caja (HUF-003): una pantalla, una decisión (docs/04). El estado vive
+ * en CajaService; este componente solo pinta la fase y captura toques.
+ */
 @Component({
   selector: 'app-pagina-caja',
-  template: `
-    <h1>La caja</h1>
-    <p>En construcción — llega en el Sprint F2.</p>
-  `,
+  templateUrl: './pagina-caja.html',
+  styleUrl: './pagina-caja.scss',
 })
-export class PaginaCaja {}
+export class PaginaCaja {
+  protected readonly caja = inject(CajaService);
+  protected readonly digitos = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+}
