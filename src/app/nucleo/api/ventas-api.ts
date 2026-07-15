@@ -60,4 +60,16 @@ export class VentasApi {
   resumen(): Observable<ResumenDeVentas> {
     return this.http.get<ResumenDeVentas>('/api/ventas/resumen');
   }
+
+  /** CSV contador-ready (BOM + ';', lo arma el backend) como blob descargable. */
+  exportar(filtros: Pick<FiltrosDeVentas, 'desde' | 'hasta'> = {}): Observable<Blob> {
+    let params = new HttpParams();
+    if (filtros.desde) {
+      params = params.set('desde', filtros.desde);
+    }
+    if (filtros.hasta) {
+      params = params.set('hasta', filtros.hasta);
+    }
+    return this.http.get('/api/ventas/exportar', { params, responseType: 'blob' });
+  }
 }

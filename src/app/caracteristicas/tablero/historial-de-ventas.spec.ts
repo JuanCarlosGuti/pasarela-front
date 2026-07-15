@@ -107,6 +107,52 @@ describe('HistorialDeVentas', () => {
     expect(html.querySelector('[role="alert"]')?.textContent).toContain('es posterior a');
   });
 
+  it('descargar CSV pide el export con los filtros vigentes y dispara la descarga (HUF-010)', () => {
+    const fixture = crear();
+    responder([]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    const desde = html.querySelector<HTMLInputElement>('input[name="desde"]')!;
+    desde.value = '2026-07-01';
+    desde.dispatchEvent(new Event('input'));
+
+    const urlFalsa = 'blob:falso';
+    const crearUrl = vi.spyOn(URL, 'createObjectURL').mockReturnValue(urlFalsa);
+    const revocarUrl = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => undefined);
+    const clicEnlace = vi
+      .spyOn(HTMLAnchorElement.prototype, 'click')
+      .mockImplementation(() => undefined);
+
+    html.querySelector<HTMLButtonElement>('button.descargar-csv')!.click();
+
+    const peticion = http.expectOne((req) => req.url === '/api/ventas/exportar');
+    expect(peticion.request.params.get('desde')).toBe('2026-07-01');
+    expect(peticion.request.responseType).toBe('blob');
+    const csv = new Blob(['contenido'], { type: 'text/csv' });
+    peticion.flush(csv);
+
+    expect(crearUrl).toHaveBeenCalledWith(csv);
+    expect(clicEnlace).toHaveBeenCalled();
+    expect(revocarUrl).toHaveBeenCalledWith(urlFalsa);
+  });
+
+  it('si la descarga falla, muestra un error claro', () => {
+    const fixture = crear();
+    responder([]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    html.querySelector<HTMLButtonElement>('button.descargar-csv')!.click();
+
+    http
+      .expectOne((req) => req.url === '/api/ventas/exportar')
+      .flush(new Blob(), { status: 500, statusText: 'Error' });
+    fixture.detectChanges();
+
+    expect(html.querySelector('[role="alert"]')?.textContent).toContain('No pudimos generar');
+  });
+
   it('Siguiente pide la página 1; Anterior deshabilitado en la primera página', () => {
     const fixture = crear();
     responder(
