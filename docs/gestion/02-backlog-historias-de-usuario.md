@@ -180,7 +180,7 @@ tener el pulso del negocio.
 **Criterios:** tarjetas grandes (total y cantidad, día/mes) desde
 `/api/ventas/resumen`; actualiza al volver a la pestaña; estados de carga/error.
 
-### ⬜ HUF-009 — Historial de movimientos
+### 🔵 HUF-009 — Historial de movimientos
 
 **Como** Dueño **quiero** revisar mis órdenes con filtros de fecha **para**
 verificar cualquier venta.
