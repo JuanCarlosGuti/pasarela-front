@@ -39,4 +39,18 @@ describe('VentasApi', () => {
     expect(peticion.request.params.get('tamano')).toBe('20');
     peticion.flush({ ordenes: [], totalElementos: 0, pagina: 0, tamano: 20 });
   });
+
+  it('consulta el resumen del día y del mes con GET /api/ventas/resumen', () => {
+    let respuesta: unknown;
+    api.resumen().subscribe((r) => (respuesta = r));
+
+    const peticion = http.expectOne('/api/ventas/resumen');
+    expect(peticion.request.method).toBe('GET');
+    peticion.flush({ dia: { total: 75000, cantidad: 2 }, mes: { total: 320000, cantidad: 9 } });
+
+    expect(respuesta).toEqual({
+      dia: { total: 75000, cantidad: 2 },
+      mes: { total: 320000, cantidad: 9 },
+    });
+  });
 });

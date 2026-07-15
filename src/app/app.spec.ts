@@ -52,4 +52,25 @@ describe('App (layout raíz)', () => {
     await fixture.whenStable();
     expect((fixture.nativeElement as HTMLElement).querySelector('button.salir')).toBeNull();
   });
+
+  it('con sesión activa hay navegación a Caja y Tu negocio (HUF-008: sin ella no hay forma de llegar sin recargar)', async () => {
+    const sesion = TestBed.inject(SesionService);
+    const codificar = (parte: object) =>
+      btoa(JSON.stringify(parte)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    sesion.iniciar(`${codificar({ alg: 'HS256' })}.${codificar({ rol: 'COMERCIO' })}.f`);
+
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const html = fixture.nativeElement as HTMLElement;
+    const enlaces = Array.from(html.querySelectorAll('nav a')).map((a) => a.textContent?.trim());
+
+    expect(enlaces).toContain('Caja');
+    expect(enlaces).toContain('Tu negocio');
+  });
+
+  it('sin sesión, no hay navegación (nada que ver antes de entrar)', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    expect((fixture.nativeElement as HTMLElement).querySelector('nav')).toBeNull();
+  });
 });

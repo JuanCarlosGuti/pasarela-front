@@ -17,6 +17,16 @@ export interface PaginaVentas {
   tamano: number;
 }
 
+export interface TotalDeVentas {
+  total: number;
+  cantidad: number;
+}
+
+export interface ResumenDeVentas {
+  dia: TotalDeVentas;
+  mes: TotalDeVentas;
+}
+
 /**
  * Cliente del historial de ventas del backend. Sin desde/hasta: el backend
  * decide el rango (mes en curso, zona Colombia) — el front no reimplementa
@@ -29,5 +39,10 @@ export class VentasApi {
   listar(tamano = 20): Observable<PaginaVentas> {
     const params = new HttpParams().set('pagina', 0).set('tamano', tamano);
     return this.http.get<PaginaVentas>('/api/ventas', { params });
+  }
+
+  /** Ventas del día y del mes en curso (zona Colombia, decide el backend). */
+  resumen(): Observable<ResumenDeVentas> {
+    return this.http.get<ResumenDeVentas>('/api/ventas/resumen');
   }
 }
