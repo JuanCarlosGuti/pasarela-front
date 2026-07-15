@@ -52,7 +52,7 @@ completa **para** construir con las mismas reglas que el backend.
 
 ## Épica EF1 — Autenticación _(Sprint F1)_
 
-### 🔵 HUF-001 — Iniciar sesión
+### ✅ HUF-001 — Iniciar sesión
 
 **Como** Dueño **quiero** entrar con mi correo y contraseña **para** operar
 mi caja y mi tablero.
@@ -71,7 +71,7 @@ mi caja y mi tablero.
 - _Coordinación backend:_ si se sirve desde otro origen en dev, tarea CORS
   (T-00x del backlog backend); con proxy no hace falta.
 
-### ⬜ HUF-002 — Sesión, guardas y expiración
+### 🔵 HUF-002 — Sesión, guardas y expiración
 
 **Como** Dueño **quiero** que la app maneje mi sesión con seguridad **para**
 no quedar expuesto ni bloqueado sin explicación.
