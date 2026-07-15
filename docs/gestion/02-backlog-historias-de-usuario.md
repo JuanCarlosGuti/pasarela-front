@@ -106,7 +106,7 @@ QR en segundos.
   Reintenta" con botón de reintento (sin orden fantasma — el backend garantiza).
 - Pruebas: componente (formato/validación) + servicio (estados) + E2E feliz.
 
-### 🔵 HUF-004 — Esperar el pago y ver PAGADO ✓
+### ✅ HUF-004 — Esperar el pago y ver PAGADO ✓
 
 **Como** Cajero **quiero** ver el QR y enterarme al instante del pago
 **para** entregar el producto sin dudar.
