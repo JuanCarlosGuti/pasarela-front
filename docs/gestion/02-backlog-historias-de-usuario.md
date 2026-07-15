@@ -125,7 +125,7 @@ QR en segundos.
 - Salir de la pantalla detiene el polling (verificado en prueba).
 - E2E rey: cobrar → webhook del simulador → PAGADO ✓ en pantalla.
 
-### ⬜ HUF-005 — Historia de la sesión de caja
+### 🔵 HUF-005 — Historia de la sesión de caja
 
 **Como** Cajero **quiero** ver los últimos cobros de mi jornada **para**
 responder "¿sí te llegó?" sin salir de la caja.
