@@ -34,10 +34,21 @@ describe('VentasApi', () => {
   });
 
   it('acepta un tamaño de página explícito', () => {
-    api.listar(20).subscribe();
+    api.listar({ tamano: 20 }).subscribe();
     const peticion = http.expectOne((req) => req.url === '/api/ventas');
     expect(peticion.request.params.get('tamano')).toBe('20');
     peticion.flush({ ordenes: [], totalElementos: 0, pagina: 0, tamano: 20 });
+  });
+
+  it('acepta desde/hasta/pagina para el historial filtrado (HUF-009)', () => {
+    api.listar({ desde: '2026-07-01', hasta: '2026-07-15', pagina: 2, tamano: 10 }).subscribe();
+
+    const peticion = http.expectOne((req) => req.url === '/api/ventas');
+    expect(peticion.request.params.get('desde')).toBe('2026-07-01');
+    expect(peticion.request.params.get('hasta')).toBe('2026-07-15');
+    expect(peticion.request.params.get('pagina')).toBe('2');
+    expect(peticion.request.params.get('tamano')).toBe('10');
+    peticion.flush({ ordenes: [], totalElementos: 0, pagina: 2, tamano: 10 });
   });
 
   it('consulta el resumen del día y del mes con GET /api/ventas/resumen', () => {

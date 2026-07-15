@@ -3,7 +3,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { PaginaTablero } from './pagina-tablero';
 
-/** HUF-008: ventas de hoy y del mes, en tarjetas grandes. */
+/**
+ * HUF-008: ventas de hoy y del mes, en tarjetas grandes. Desde HUF-009 la
+ * página también incluye <app-historial-de-ventas>, que dispara su propia
+ * consulta a GET /api/ventas — se responde vacía en cada prueba para no
+ * dejar peticiones abiertas (HistorialDeVentas tiene sus propias pruebas).
+ */
 describe('PaginaTablero — resumen', () => {
   let http: HttpTestingController;
 
@@ -23,12 +28,19 @@ describe('PaginaTablero — resumen', () => {
     return fixture;
   }
 
+  function responderHistorialVacio() {
+    http
+      .expectOne((req) => req.url === '/api/ventas')
+      .flush({ ordenes: [], totalElementos: 0, pagina: 0, tamano: 20 });
+  }
+
   it('muestra "cargando" mientras llega la respuesta', () => {
     const fixture = crear();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Cargando');
     http
       .expectOne('/api/ventas/resumen')
       .flush({ dia: { total: 0, cantidad: 0 }, mes: { total: 0, cantidad: 0 } });
+    responderHistorialVacio();
   });
 
   it('muestra el total y la cantidad de hoy y del mes, formateados', () => {
@@ -37,6 +49,7 @@ describe('PaginaTablero — resumen', () => {
       dia: { total: 75000, cantidad: 2 },
       mes: { total: 320000, cantidad: 9 },
     });
+    responderHistorialVacio();
     fixture.detectChanges();
 
     const html = fixture.nativeElement as HTMLElement;
@@ -49,6 +62,7 @@ describe('PaginaTablero — resumen', () => {
   it('si la carga falla, muestra un error con opción de reintentar', () => {
     const fixture = crear();
     http.expectOne('/api/ventas/resumen').flush({}, { status: 500, statusText: 'Error' });
+    responderHistorialVacio();
     fixture.detectChanges();
 
     const html = fixture.nativeElement as HTMLElement;
@@ -69,6 +83,7 @@ describe('PaginaTablero — resumen', () => {
       dia: { total: 75000, cantidad: 2 },
       mes: { total: 320000, cantidad: 9 },
     });
+    responderHistorialVacio();
     fixture.detectChanges();
 
     Object.defineProperty(document, 'visibilityState', {
@@ -91,6 +106,7 @@ describe('PaginaTablero — resumen', () => {
       dia: { total: 75000, cantidad: 2 },
       mes: { total: 320000, cantidad: 9 },
     });
+    responderHistorialVacio();
     fixture.destroy();
 
     document.dispatchEvent(new Event('visibilitychange'));

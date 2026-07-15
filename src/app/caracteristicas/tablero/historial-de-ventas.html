@@ -1,0 +1,79 @@
+<section class="historial">
+  <h2>Historial</h2>
+
+  <div class="filtros">
+    <label for="desde">Desde</label>
+    <input id="desde" name="desde" type="date" [(ngModel)]="desde" />
+
+    <label for="hasta">Hasta</label>
+    <input id="hasta" name="hasta" type="date" [(ngModel)]="hasta" />
+
+    <button type="button" class="filtrar" (click)="filtrar()">Filtrar</button>
+  </div>
+
+  @if (cargando()) {
+    <p>Cargando…</p>
+  } @else if (error(); as mensaje) {
+    <p role="alert" class="error">{{ mensaje }}</p>
+  } @else if (pagina(); as datos) {
+    @if (datos.ordenes.length === 0) {
+      <p class="vacio">No hay movimientos en este rango</p>
+    } @else {
+      <ul class="tarjetas-movil">
+        @for (orden of datos.ordenes; track trackPorId($index, orden)) {
+          <li>
+            <span class="fecha">{{ formatearFecha(orden.creadaEn) }}</span>
+            <span class="monto">{{ formatearMonto(orden.monto) }}</span>
+            <span class="estado {{ estadoVisual(orden.estado).clase }}">
+              {{ estadoVisual(orden.estado).etiqueta }}
+            </span>
+          </li>
+        }
+      </ul>
+
+      <table class="tabla-escritorio">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Referencia</th>
+            <th>Monto</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (orden of datos.ordenes; track trackPorId($index, orden)) {
+            <tr>
+              <td>{{ formatearFecha(orden.creadaEn) }}</td>
+              <td>{{ orden.referencia }}</td>
+              <td>{{ formatearMonto(orden.monto) }}</td>
+              <td>
+                <span class="estado {{ estadoVisual(orden.estado).clase }}">
+                  {{ estadoVisual(orden.estado).etiqueta }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <div class="paginacion">
+        <button
+          type="button"
+          class="anterior"
+          [disabled]="datos.pagina === 0"
+          (click)="paginaAnterior()"
+        >
+          Anterior
+        </button>
+        <button
+          type="button"
+          class="siguiente"
+          [disabled]="!hayPaginaSiguiente"
+          (click)="paginaSiguiente()"
+        >
+          Siguiente
+        </button>
+      </div>
+    }
+  }
+</section>

@@ -1,0 +1,116 @@
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { PaginaVentas, VentaResumen, VentasApi } from '../../nucleo/api/ventas-api';
+
+interface EstadoVisual {
+  etiqueta: string;
+  clase: string;
+}
+
+const ESTADOS: Record<string, EstadoVisual> = {
+  PENDIENTE_PAGO: { etiqueta: 'Pendiente', clase: 'pendiente' },
+  PAGO_DETECTADO: { etiqueta: 'Pagado', clase: 'pagado' },
+  CONVERTIDA: { etiqueta: 'Pagado', clase: 'pagado' },
+  LIQUIDADA: { etiqueta: 'Pagado', clase: 'pagado' },
+  EXPIRADA: { etiqueta: 'Expiró', clase: 'expirado' },
+  FALLIDA: { etiqueta: 'Revisar', clase: 'alerta' },
+  EN_REVISION: { etiqueta: 'Revisar', clase: 'alerta' },
+};
+
+/**
+ * Historial de movimientos del tablero (HUF-009): lista paginada con
+ * filtro de fechas. Móvil = tarjetas, escritorio = tabla (docs/04) — ambas
+ * marcaciones se generan siempre; qué se ve es solo CSS (sin detección de
+ * dispositivo en TS).
+ */
+@Component({
+  selector: 'app-historial-de-ventas',
+  imports: [FormsModule],
+  templateUrl: './historial-de-ventas.html',
+  styleUrl: './historial-de-ventas.scss',
+})
+export class HistorialDeVentas implements OnInit {
+  private readonly api = inject(VentasApi);
+
+  protected readonly cargando = signal(true);
+  protected readonly error = signal<string | null>(null);
+  protected readonly pagina = signal<PaginaVentas | null>(null);
+
+  protected desde = '';
+  protected hasta = '';
+  private paginaActual = 0;
+
+  ngOnInit(): void {
+    this.cargar();
+  }
+
+  protected filtrar(): void {
+    this.paginaActual = 0;
+    this.cargar();
+  }
+
+  protected paginaAnterior(): void {
+    if (this.paginaActual === 0) {
+      return;
+    }
+    this.paginaActual -= 1;
+    this.cargar();
+  }
+
+  protected paginaSiguiente(): void {
+    this.paginaActual += 1;
+    this.cargar();
+  }
+
+  protected get hayPaginaSiguiente(): boolean {
+    const datos = this.pagina();
+    if (datos === null) {
+      return false;
+    }
+    return (this.paginaActual + 1) * datos.tamano < datos.totalElementos;
+  }
+
+  private cargar(): void {
+    this.cargando.set(true);
+    this.error.set(null);
+    this.api
+      .listar({
+        desde: this.desde || undefined,
+        hasta: this.hasta || undefined,
+        pagina: this.paginaActual,
+      })
+      .subscribe({
+        next: (pagina) => {
+          this.pagina.set(pagina);
+          this.cargando.set(false);
+        },
+        error: (fallo: HttpErrorResponse) => {
+          const mensajeDelBackend = (fallo.error as { mensaje?: string } | null)?.mensaje;
+          this.error.set(mensajeDelBackend ?? 'No pudimos cargar tu historial. Intenta de nuevo');
+          this.cargando.set(false);
+        },
+      });
+  }
+
+  protected estadoVisual(estado: string): EstadoVisual {
+    return ESTADOS[estado] ?? { etiqueta: estado, clase: 'desconocido' };
+  }
+
+  protected formatearMonto(monto: number): string {
+    return '$ ' + new Intl.NumberFormat('es-CO').format(monto);
+  }
+
+  protected formatearFecha(iso: string): string {
+    return new Intl.DateTimeFormat('es-CO', {
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(iso));
+  }
+
+  protected trackPorId(_indice: number, orden: VentaResumen): string {
+    return orden.id;
+  }
+}
