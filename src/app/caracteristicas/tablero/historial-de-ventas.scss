@@ -137,3 +137,19 @@
     }
   }
 }
+
+.descargar-csv {
+  padding: var(--espacio-2) var(--espacio-3);
+  min-height: 44px;
+  background: var(--color-superficie);
+  color: var(--color-primario);
+  border: 1px solid var(--color-primario);
+  border-radius: var(--radio);
+  font-weight: 700;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}

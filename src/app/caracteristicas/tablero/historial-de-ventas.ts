@@ -36,6 +36,8 @@ export class HistorialDeVentas implements OnInit {
   protected readonly cargando = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly pagina = signal<PaginaVentas | null>(null);
+  protected readonly descargando = signal(false);
+  protected readonly errorDescarga = signal<string | null>(null);
 
   protected desde = '';
   protected hasta = '';
@@ -61,6 +63,29 @@ export class HistorialDeVentas implements OnInit {
   protected paginaSiguiente(): void {
     this.paginaActual += 1;
     this.cargar();
+  }
+
+  /** CSV contador-ready (HUF-010) con el MISMO rango vigente del historial. */
+  protected descargarCsv(): void {
+    this.descargando.set(true);
+    this.errorDescarga.set(null);
+    this.api
+      .exportar({ desde: this.desde || undefined, hasta: this.hasta || undefined })
+      .subscribe({
+        next: (csv) => {
+          this.descargando.set(false);
+          const url = URL.createObjectURL(csv);
+          const enlace = document.createElement('a');
+          enlace.href = url;
+          enlace.download = 'movimientos.csv';
+          enlace.click();
+          URL.revokeObjectURL(url);
+        },
+        error: () => {
+          this.descargando.set(false);
+          this.errorDescarga.set('No pudimos generar el archivo. Intenta de nuevo');
+        },
+      });
   }
 
   protected get hayPaginaSiguiente(): boolean {

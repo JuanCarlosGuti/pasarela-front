@@ -51,6 +51,28 @@ describe('VentasApi', () => {
     peticion.flush({ ordenes: [], totalElementos: 0, pagina: 2, tamano: 10 });
   });
 
+  it('exporta el CSV con GET /api/ventas/exportar como blob (HUF-010)', () => {
+    let respuesta: Blob | undefined;
+    api.exportar({ desde: '2026-07-01', hasta: '2026-07-15' }).subscribe((r) => (respuesta = r));
+
+    const peticion = http.expectOne((req) => req.url === '/api/ventas/exportar');
+    expect(peticion.request.method).toBe('GET');
+    expect(peticion.request.params.get('desde')).toBe('2026-07-01');
+    expect(peticion.request.params.get('hasta')).toBe('2026-07-15');
+    expect(peticion.request.responseType).toBe('blob');
+
+    const csv = new Blob(['contenido'], { type: 'text/csv' });
+    peticion.flush(csv);
+    expect(respuesta).toBe(csv);
+  });
+
+  it('exporta sin fechas (el backend decide el rango)', () => {
+    api.exportar().subscribe();
+    const peticion = http.expectOne((req) => req.url === '/api/ventas/exportar');
+    expect(peticion.request.params.has('desde')).toBe(false);
+    peticion.flush(new Blob());
+  });
+
   it('consulta el resumen del día y del mes con GET /api/ventas/resumen', () => {
     let respuesta: unknown;
     api.resumen().subscribe((r) => (respuesta = r));
