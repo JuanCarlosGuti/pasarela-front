@@ -89,7 +89,7 @@ no quedar expuesto ni bloqueado sin explicación.
 
 ## Épica EF2 — La caja _(Sprint F2 — el corazón)_
 
-### ⬜ HUF-003 — Crear un cobro
+### 🔵 HUF-003 — Crear un cobro
 
 **Como** Cajero **quiero** digitar un monto y tocar COBRAR **para** generar el
 QR en segundos.
