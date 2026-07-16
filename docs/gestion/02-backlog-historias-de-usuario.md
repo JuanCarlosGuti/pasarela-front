@@ -243,7 +243,7 @@ gestionar riesgo.
 **Criterios:** formulario de límites (PUT `/api/comercios/{id}/limites`),
 validaciones y confirmación del cambio.
 
-### ⬜ TF-004 — Accesibilidad y endurecimiento del cliente
+### ✅ TF-004 — Accesibilidad y endurecimiento del cliente
 
 **Como** Dev **quiero** cerrar el MVP con auditoría de accesibilidad y
 seguridad de cliente **para** salir al piloto sin vergüenzas.
