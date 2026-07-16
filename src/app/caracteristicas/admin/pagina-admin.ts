@@ -26,6 +26,11 @@ interface Confirmacion {
  * irreversibles a un toque, no). El motivo del rechazo lo exige el backend;
  * aquí solo se bloquea el botón hasta que exista. Los 409 de transición
  * inválida (p. ej. otro admin decidió primero) se muestran tal cual.
+ *
+ * <p>Desde HUF-013, cada fila también edita sus topes (PUT
+ * /api/comercios/{id}/limites). La regla de negocio (tope por transacción ≤
+ * mensual) la valida el BACKEND — el cliente solo exige positivos para
+ * habilitar el botón, y muestra el 400 con el mensaje literal.</p>
  */
 @Component({
   selector: 'app-pagina-admin',
@@ -42,9 +47,14 @@ export class PaginaAdmin implements OnInit {
   protected readonly confirmando = signal<Confirmacion | null>(null);
   protected readonly errorDecision = signal<string | null>(null);
   protected readonly decidiendo = signal(false);
+  protected readonly editandoLimites = signal<ComercioRegistrado | null>(null);
+  protected readonly errorLimites = signal<string | null>(null);
+  protected readonly guardandoLimites = signal(false);
 
   protected filtro = '';
   protected motivo = '';
+  protected topePorTransaccion = '';
+  protected topeMensual = '';
 
   ngOnInit(): void {
     this.cargar();
@@ -59,6 +69,7 @@ export class PaginaAdmin implements OnInit {
     decision: Confirmacion['decision'],
   ): void {
     this.confirmando.set({ comercio, decision });
+    this.editandoLimites.set(null); // un panel a la vez
     this.motivo = '';
     this.errorDecision.set(null);
   }
@@ -102,6 +113,68 @@ export class PaginaAdmin implements OnInit {
           this.decidiendo.set(false);
         },
       });
+  }
+
+  protected abrirLimites(comercio: ComercioRegistrado): void {
+    this.editandoLimites.set(comercio);
+    this.confirmando.set(null); // un panel a la vez
+    this.errorLimites.set(null);
+    this.topePorTransaccion = String(comercio.limites?.topePorTransaccion ?? '');
+    this.topeMensual = String(comercio.limites?.topeMensual ?? '');
+  }
+
+  protected cerrarLimites(): void {
+    this.editandoLimites.set(null);
+    this.errorLimites.set(null);
+  }
+
+  protected get puedeGuardar(): boolean {
+    if (this.editandoLimites() === null || this.guardandoLimites()) {
+      return false;
+    }
+    return (
+      PaginaAdmin.esTopeValido(this.topePorTransaccion) &&
+      PaginaAdmin.esTopeValido(this.topeMensual)
+    );
+  }
+
+  private static esTopeValido(valor: string): boolean {
+    const numero = Number(valor);
+    return Number.isInteger(numero) && numero > 0;
+  }
+
+  protected guardarLimites(): void {
+    const comercio = this.editandoLimites();
+    if (comercio === null || !this.puedeGuardar) {
+      return;
+    }
+    this.guardandoLimites.set(true);
+    this.errorLimites.set(null);
+    this.api
+      .actualizarLimites(comercio.id, {
+        topePorTransaccion: Number(this.topePorTransaccion),
+        topeMensual: Number(this.topeMensual),
+      })
+      .subscribe({
+        next: (actualizado) => {
+          this.comercios.update((lista) =>
+            lista.map((cada) => (cada.id === actualizado.id ? actualizado : cada)),
+          );
+          this.guardandoLimites.set(false);
+          this.editandoLimites.set(null);
+        },
+        error: (fallo: HttpErrorResponse) => {
+          const mensajeDelBackend = (fallo.error as { mensaje?: string } | null)?.mensaje;
+          this.errorLimites.set(
+            mensajeDelBackend ?? 'No pudimos guardar los límites. Intenta de nuevo',
+          );
+          this.guardandoLimites.set(false);
+        },
+      });
+  }
+
+  protected formatearMonto(monto: number): string {
+    return '$ ' + new Intl.NumberFormat('es-CO').format(monto);
   }
 
   protected estadoVisual(estado: string): EstadoVisual {

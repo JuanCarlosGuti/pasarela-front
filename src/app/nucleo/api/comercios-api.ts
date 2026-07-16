@@ -20,12 +20,19 @@ export interface RegistroComercio {
   credenciales: Credenciales;
 }
 
+export interface LimitesOperacion {
+  topePorTransaccion: number;
+  topeMensual: number;
+}
+
 export interface ComercioRegistrado {
   id: string;
   razonSocial: string;
   nit: string;
   estadoVerificacion: string;
   registradoEn: string;
+  /** Presente en las respuestas del backend; opcional por compatibilidad. */
+  limites?: LimitesOperacion;
 }
 
 /** Cliente del registro de comercios (público — sin sesión). */
@@ -64,5 +71,13 @@ export class ComerciosApi {
       decision,
       motivo: motivo ?? null,
     });
+  }
+
+  /**
+   * Topes en pesos (HUF-013). Las reglas de negocio (positivos, tope por
+   * transacción ≤ mensual) las valida el BACKEND; el 400 llega con mensaje.
+   */
+  actualizarLimites(id: string, limites: LimitesOperacion): Observable<ComercioRegistrado> {
+    return this.http.put<ComercioRegistrado>(`/api/comercios/${id}/limites`, limites);
   }
 }

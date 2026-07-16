@@ -101,4 +101,30 @@ describe('ComerciosApi', () => {
       registradoEn: '2026-07-15T10:00:00Z',
     });
   });
+
+  it('actualiza los topes con PUT /api/comercios/{id}/limites (HUF-013)', () => {
+    let respuesta: unknown;
+    api
+      .actualizarLimites('com-1', { topePorTransaccion: 500000, topeMensual: 10000000 })
+      .subscribe((r) => (respuesta = r));
+
+    const peticion = http.expectOne('/api/comercios/com-1/limites');
+    expect(peticion.request.method).toBe('PUT');
+    expect(peticion.request.body).toEqual({
+      topePorTransaccion: 500000,
+      topeMensual: 10000000,
+    });
+    peticion.flush({
+      id: 'com-1',
+      razonSocial: 'Café Central',
+      nit: '900650321-2',
+      estadoVerificacion: 'VERIFICADO',
+      registradoEn: '2026-07-15T10:00:00Z',
+      limites: { topePorTransaccion: 500000, topeMensual: 10000000 },
+    });
+
+    expect(respuesta).toMatchObject({
+      limites: { topePorTransaccion: 500000, topeMensual: 10000000 },
+    });
+  });
 });

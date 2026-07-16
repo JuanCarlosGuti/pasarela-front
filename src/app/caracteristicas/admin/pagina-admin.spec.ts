@@ -30,6 +30,7 @@ describe('PaginaAdmin', () => {
       nit: '900650321-2',
       estadoVerificacion: estado,
       registradoEn: '2026-07-16T10:00:00Z',
+      limites: { topePorTransaccion: 2000000, topeMensual: 20000000 },
     };
   }
 
@@ -172,5 +173,101 @@ describe('PaginaAdmin', () => {
     expect(
       (fixture.nativeElement as HTMLElement).querySelector('[role="alert"]')?.textContent,
     ).toContain('No pudimos cargar');
+  });
+
+  it('la fila muestra los topes vigentes del comercio (HUF-013)', () => {
+    const fixture = crear();
+    responder([comercio('c1', 'VERIFICADO')]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    expect(html.textContent).toContain('$ 2.000.000');
+    expect(html.textContent).toContain('$ 20.000.000');
+  });
+
+  it('el editor de límites precarga los topes vigentes y guarda con PUT (HUF-013)', async () => {
+    const fixture = crear();
+    responder([comercio('c1', 'VERIFICADO')]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    html.querySelector<HTMLButtonElement>('button.limites')!.click();
+    fixture.detectChanges();
+    // ngModel escribe el valor en un microtask: hay que esperar a que asiente
+    await fixture.whenStable();
+
+    const porTransaccion = html.querySelector<HTMLInputElement>(
+      'input[name="topePorTransaccion"]',
+    )!;
+    const mensual = html.querySelector<HTMLInputElement>('input[name="topeMensual"]')!;
+    expect(porTransaccion.value).toBe('2000000');
+    expect(mensual.value).toBe('20000000');
+
+    porTransaccion.value = '500000';
+    porTransaccion.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    html.querySelector<HTMLButtonElement>('button.guardar')!.click();
+    const peticion = http.expectOne('/api/comercios/c1/limites');
+    expect(peticion.request.method).toBe('PUT');
+    expect(peticion.request.body).toEqual({ topePorTransaccion: 500000, topeMensual: 20000000 });
+    peticion.flush({
+      ...comercio('c1', 'VERIFICADO'),
+      limites: { topePorTransaccion: 500000, topeMensual: 20000000 },
+    });
+    fixture.detectChanges();
+
+    // confirmación del cambio: la fila muestra el tope nuevo y el editor se cierra
+    expect(html.textContent).toContain('$ 500.000');
+    expect(html.querySelector('input[name="topePorTransaccion"]')).toBeNull();
+  });
+
+  it('con un tope no positivo, guardar queda deshabilitado (HUF-013)', () => {
+    const fixture = crear();
+    responder([comercio('c1', 'VERIFICADO')]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    html.querySelector<HTMLButtonElement>('button.limites')!.click();
+    fixture.detectChanges();
+
+    const porTransaccion = html.querySelector<HTMLInputElement>(
+      'input[name="topePorTransaccion"]',
+    )!;
+    porTransaccion.value = '0';
+    porTransaccion.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(html.querySelector<HTMLButtonElement>('button.guardar')!.disabled).toBe(true);
+  });
+
+  it('un 400 del backend (tope por transacción mayor al mensual) se muestra tal cual (HUF-013)', () => {
+    const fixture = crear();
+    responder([comercio('c1', 'VERIFICADO')]);
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    html.querySelector<HTMLButtonElement>('button.limites')!.click();
+    fixture.detectChanges();
+
+    const porTransaccion = html.querySelector<HTMLInputElement>(
+      'input[name="topePorTransaccion"]',
+    )!;
+    porTransaccion.value = '30000000';
+    porTransaccion.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    html.querySelector<HTMLButtonElement>('button.guardar')!.click();
+    http
+      .expectOne('/api/comercios/c1/limites')
+      .flush(
+        { mensaje: 'El tope por transacción no puede superar el tope mensual' },
+        { status: 400, statusText: 'Bad Request' },
+      );
+    fixture.detectChanges();
+
+    expect(html.querySelector('[role="alert"]')?.textContent).toContain(
+      'no puede superar el tope mensual',
+    );
   });
 });
