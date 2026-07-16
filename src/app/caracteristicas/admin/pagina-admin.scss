@@ -58,7 +58,8 @@
     font-weight: 700;
   }
 
-  .nit {
+  .nit,
+  .topes {
     color: #666;
     font-size: 0.85rem;
   }
@@ -105,10 +106,17 @@
 }
 
 .aprobar,
-.confirmar {
+.confirmar,
+.guardar {
   background: var(--color-primario);
   color: #fff;
   border: none;
+}
+
+.limites {
+  background: var(--color-superficie);
+  color: var(--color-primario);
+  border: 1px solid var(--color-primario);
 }
 
 .rechazar {

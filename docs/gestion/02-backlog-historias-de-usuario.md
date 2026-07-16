@@ -235,7 +235,7 @@ quién cobra.
 **Criterios:** lista de comercios con estado; detalle → APROBAR/RECHAZAR
 (confirmación previa); errores 409 de transición inválida mostrados.
 
-### ⬜ HUF-013 — Límites por comercio (admin)
+### ✅ HUF-013 — Límites por comercio (admin)
 
 **Como** Admin **quiero** ajustar topes por transacción y por mes **para**
 gestionar riesgo.
