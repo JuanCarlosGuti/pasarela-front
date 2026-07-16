@@ -56,4 +56,49 @@ describe('ComerciosApi', () => {
       registradoEn: '2026-07-15T10:00:00Z',
     });
   });
+
+  it('lista los comercios con GET /api/comercios, con filtro de estado opcional (HUF-012)', () => {
+    api.listar().subscribe();
+    const sinFiltro = http.expectOne((req) => req.url === '/api/comercios');
+    expect(sinFiltro.request.method).toBe('GET');
+    expect(sinFiltro.request.params.has('estado')).toBe(false);
+    sinFiltro.flush([]);
+
+    api.listar('PENDIENTE').subscribe();
+    const conFiltro = http.expectOne((req) => req.url === '/api/comercios');
+    expect(conFiltro.request.params.get('estado')).toBe('PENDIENTE');
+    conFiltro.flush([]);
+  });
+
+  it('decide la verificación con POST /api/comercios/{id}/verificacion (HUF-012)', () => {
+    api.decidirVerificacion('com-1', 'RECHAZAR', 'Documentos ilegibles').subscribe();
+
+    const peticion = http.expectOne('/api/comercios/com-1/verificacion');
+    expect(peticion.request.method).toBe('POST');
+    expect(peticion.request.body).toEqual({
+      decision: 'RECHAZAR',
+      motivo: 'Documentos ilegibles',
+    });
+    peticion.flush({
+      id: 'com-1',
+      razonSocial: 'Café Central',
+      nit: '900650321-2',
+      estadoVerificacion: 'RECHAZADO',
+      registradoEn: '2026-07-15T10:00:00Z',
+    });
+  });
+
+  it('aprobar no envía motivo (el backend no lo exige para APROBAR)', () => {
+    api.decidirVerificacion('com-1', 'APROBAR').subscribe();
+
+    const peticion = http.expectOne('/api/comercios/com-1/verificacion');
+    expect(peticion.request.body).toEqual({ decision: 'APROBAR', motivo: null });
+    peticion.flush({
+      id: 'com-1',
+      razonSocial: 'Café Central',
+      nit: '900650321-2',
+      estadoVerificacion: 'VERIFICADO',
+      registradoEn: '2026-07-15T10:00:00Z',
+    });
+  });
 });
