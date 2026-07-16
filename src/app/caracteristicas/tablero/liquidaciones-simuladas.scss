@@ -1,0 +1,114 @@
+// Tus liquidaciones (HUF-014): mobile = tarjetas, escritorio = tabla.
+.liquidaciones {
+  margin-top: var(--espacio-5);
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.simulado {
+  padding: 2px var(--espacio-2);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-alerta);
+}
+
+.aviso {
+  color: #666;
+  font-size: 0.85rem;
+  margin: var(--espacio-1) 0 var(--espacio-3);
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.vacio {
+  color: #666;
+  text-align: center;
+  padding: var(--espacio-4) 0;
+}
+
+.neto {
+  font-weight: 700;
+  color: var(--color-exito);
+}
+
+.tarjetas-movil {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espacio-3);
+
+  li {
+    padding: var(--espacio-3);
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+  }
+
+  .fila {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    margin-bottom: var(--espacio-2);
+  }
+
+  .fecha {
+    color: #666;
+    font-weight: 400;
+  }
+
+  dl {
+    display: grid;
+    gap: var(--espacio-1);
+    margin: 0;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--espacio-2);
+    }
+
+    dt {
+      color: #666;
+    }
+
+    dd {
+      margin: 0;
+      text-align: right;
+    }
+  }
+}
+
+.tabla-escritorio {
+  display: none;
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: left;
+    padding: var(--espacio-2);
+    border-bottom: 1px solid var(--color-borde);
+  }
+}
+
+@media (min-width: 720px) {
+  .tarjetas-movil {
+    display: none;
+  }
+  .tabla-escritorio {
+    display: table;
+  }
+}
