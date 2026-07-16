@@ -227,7 +227,7 @@ destino) y una etiqueta "Simulado" siempre visible; vacío amable.
 
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_
 
-### ⬜ HUF-012 — Verificación de comercios (admin)
+### ✅ HUF-012 — Verificación de comercios (admin)
 
 **Como** Admin **quiero** aprobar o rechazar comercios **para** controlar
 quién cobra.

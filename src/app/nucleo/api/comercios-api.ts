@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -40,5 +40,29 @@ export class ComerciosApi {
   /** Protegido: el interceptor agrega el Authorization de la sesión activa. */
   consultar(id: string): Observable<ComercioRegistrado> {
     return this.http.get<ComercioRegistrado>(`/api/comercios/${id}`);
+  }
+
+  /** Cola de verificación del admin (HUF-012); sin estado, lista todos. */
+  listar(estado?: string): Observable<ComercioRegistrado[]> {
+    let params = new HttpParams();
+    if (estado) {
+      params = params.set('estado', estado);
+    }
+    return this.http.get<ComercioRegistrado[]>('/api/comercios', { params });
+  }
+
+  /**
+   * APROBAR/RECHAZAR/SUSPENDER/REACTIVAR (HUF-012). El motivo lo exige el
+   * BACKEND para rechazar y suspender — aquí solo se transporta.
+   */
+  decidirVerificacion(
+    id: string,
+    decision: string,
+    motivo?: string,
+  ): Observable<ComercioRegistrado> {
+    return this.http.post<ComercioRegistrado>(`/api/comercios/${id}/verificacion`, {
+      decision,
+      motivo: motivo ?? null,
+    });
   }
 }

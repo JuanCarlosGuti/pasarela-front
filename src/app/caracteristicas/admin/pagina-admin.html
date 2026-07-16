@@ -1,0 +1,87 @@
+<h1>Administración</h1>
+
+<div class="filtros">
+  <label for="filtro">Estado</label>
+  <select id="filtro" name="filtro" [(ngModel)]="filtro" (change)="filtrar()">
+    <option value="">Todos</option>
+    <option value="PENDIENTE">Pendientes</option>
+    <option value="VERIFICADO">Verificados</option>
+    <option value="RECHAZADO">Rechazados</option>
+    <option value="SUSPENDIDO">Suspendidos</option>
+  </select>
+</div>
+
+@if (cargando()) {
+  <p>Cargando…</p>
+} @else if (error(); as mensaje) {
+  <p role="alert" class="error">{{ mensaje }}</p>
+} @else if (comercios().length === 0) {
+  <p class="vacio">No hay comercios en este estado</p>
+} @else {
+  <ul class="cola">
+    @for (comercio of comercios(); track trackPorId($index, comercio)) {
+      <li>
+        <div class="datos">
+          <span class="razon">{{ comercio.razonSocial }}</span>
+          <span class="nit"
+            >NIT {{ comercio.nit }} · {{ formatearFecha(comercio.registradoEn) }}</span
+          >
+        </div>
+        <span class="estado {{ estadoVisual(comercio.estadoVerificacion).clase }}">
+          {{ estadoVisual(comercio.estadoVerificacion).etiqueta }}
+        </span>
+        @if (comercio.estadoVerificacion === 'PENDIENTE') {
+          <div class="acciones">
+            <button type="button" class="aprobar" (click)="pedirConfirmacion(comercio, 'APROBAR')">
+              Aprobar
+            </button>
+            <button
+              type="button"
+              class="rechazar"
+              (click)="pedirConfirmacion(comercio, 'RECHAZAR')"
+            >
+              Rechazar
+            </button>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+}
+
+@if (confirmando(); as confirmacion) {
+  <div class="confirmacion" role="dialog" aria-labelledby="titulo-confirmacion">
+    @if (confirmacion.decision === 'APROBAR') {
+      <p id="titulo-confirmacion">
+        ¿Aprobar a {{ confirmacion.comercio.razonSocial }}? Podrá cobrar de inmediato.
+      </p>
+    } @else {
+      <p id="titulo-confirmacion">
+        ¿Rechazar a {{ confirmacion.comercio.razonSocial }}? El motivo queda auditado.
+      </p>
+      <label for="motivo">Motivo</label>
+      <input
+        id="motivo"
+        name="motivo"
+        type="text"
+        [(ngModel)]="motivo"
+        placeholder="Ej.: documentos ilegibles"
+      />
+    }
+
+    @if (errorDecision(); as mensaje) {
+      <p role="alert" class="error">{{ mensaje }}</p>
+    }
+
+    <div class="acciones">
+      <button type="button" class="confirmar" [disabled]="!puedeConfirmar" (click)="confirmar()">
+        @if (decidiendo()) {
+          Aplicando…
+        } @else {
+          Confirmar
+        }
+      </button>
+      <button type="button" class="cancelar" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+}
