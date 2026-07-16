@@ -56,7 +56,7 @@
         <p class="instruccion">Muestra este código al cliente</p>
 
         @if (qrSvg(); as svg) {
-          <div class="qr-imagen" aria-label="Código QR de pago" [innerHTML]="svg"></div>
+          <div class="qr-imagen" role="img" aria-label="Código QR de pago" [innerHTML]="svg"></div>
         } @else {
           <div class="qr" aria-label="Código de pago">
             <code>{{ caja.orden()?.qr?.contenido }}</code>

@@ -1,0 +1,74 @@
+<section class="liquidaciones">
+  <div class="encabezado">
+    <h2>Tus liquidaciones</h2>
+    <span class="simulado">Simulado</span>
+  </div>
+  <p class="aviso">
+    Así se vería la conversión de tu cripto a COP cuando tengamos un proveedor de rampa contratado.
+    Por ahora, ningún dato aquí es dinero real.
+  </p>
+
+  @if (cargando()) {
+    <p>Cargando…</p>
+  } @else if (error(); as mensaje) {
+    <p role="alert" class="error">{{ mensaje }}</p>
+  } @else if (liquidaciones().length === 0) {
+    <p class="vacio">Aún no tienes liquidaciones</p>
+  } @else {
+    <ul class="tarjetas-movil">
+      @for (liq of liquidaciones(); track trackPorId($index, liq)) {
+        <li>
+          <div class="fila">
+            <span class="fecha">{{ formatearFecha(liq.liquidadaEn) }}</span>
+            <span class="bruto">{{ formatearMonto(liq.montoBruto) }}</span>
+          </div>
+          <dl>
+            <div>
+              <dt>Comisión de rampa</dt>
+              <dd>{{ formatearMonto(liq.comisionRampa) }} (tasa {{ liq.tasaCambioSimulada }})</dd>
+            </div>
+            <div>
+              <dt>Comisión plataforma</dt>
+              <dd>{{ formatearMonto(liq.comisionPlataforma) }}</dd>
+            </div>
+            <div>
+              <dt>Neto a tu cuenta</dt>
+              <dd class="neto">{{ formatearMonto(liq.montoNetoComercio) }}</dd>
+            </div>
+            <div>
+              <dt>Cuenta destino</dt>
+              <dd>{{ liq.cuentaDestinoDescripcion }}</dd>
+            </div>
+          </dl>
+        </li>
+      }
+    </ul>
+
+    <table class="tabla-escritorio">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Bruto</th>
+          <th>Fee rampa</th>
+          <th>Tasa</th>
+          <th>Comisión</th>
+          <th>Neto</th>
+          <th>Cuenta destino</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (liq of liquidaciones(); track trackPorId($index, liq)) {
+          <tr>
+            <td>{{ formatearFecha(liq.liquidadaEn) }}</td>
+            <td>{{ formatearMonto(liq.montoBruto) }}</td>
+            <td>{{ formatearMonto(liq.comisionRampa) }}</td>
+            <td>{{ liq.tasaCambioSimulada }}</td>
+            <td>{{ formatearMonto(liq.comisionPlataforma) }}</td>
+            <td class="neto">{{ formatearMonto(liq.montoNetoComercio) }}</td>
+            <td>{{ liq.cuentaDestinoDescripcion }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

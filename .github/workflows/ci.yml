@@ -1,6 +1,10 @@
-# CI del frontend (TF-002): pruebas y build en cada push. El lint se suma en
-# cuanto TF-002 configure angular-eslint (este pipeline falla si algo se rompe,
-# igual que el verify del backend).
+# CI del frontend (TF-002 + TF-004): calidad en cada push.
+# - verificar: lint + formato + pruebas + build + npm audit (falla con
+#   vulnerabilidades high/critical; las low de tooling no bloquean).
+# - e2e: la suite Playwright COMPLETA contra el sistema real — clona el
+#   backend (repo público, rama develop), levanta PostgreSQL y Spring Boot,
+#   y corre todos los escenarios incluida la auditoría AA de axe-core. Si el
+#   contrato entre repos se rompe, este job lo grita antes que un usuario.
 name: ci
 
 on:
@@ -23,7 +27,76 @@ jobs:
         run: npm run lint
       - name: Formato (Prettier)
         run: npm run format:check
+      - name: Auditoría de dependencias (TF-004)
+        run: npm audit --audit-level=high
       - name: Pruebas (Vitest)
         run: npm test -- --watch=false
       - name: Build de producción
         run: npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      # Clave EFÍMERA del postgres del CI: única por corrida, muere con el
+      # contenedor. No es un secreto — no protege nada fuera de este job.
+      DB_PASSWORD: ci-${{ github.run_id }}
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: pagos
+          POSTGRES_USER: pagos
+          POSTGRES_PASSWORD: ci-${{ github.run_id }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U pagos -d pagos"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout del backend (pasarela-Cripto, develop)
+        uses: actions/checkout@v4
+        with:
+          repository: JuanCarlosGuti/pasarela-Cripto
+          ref: develop
+          path: backend
+
+      - name: JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Arrancar el backend (perfil local + proveedor simulado)
+        working-directory: backend
+        run: |
+          ./mvnw --batch-mode -q spring-boot:run -Dspring-boot.run.profiles=local &
+          echo "Esperando el health del backend..."
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:8080/actuator/health > /dev/null; then
+              echo "Backend arriba"; exit 0
+            fi
+            sleep 3
+          done
+          echo "El backend nunca respondió"; exit 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Navegador de Playwright
+        run: npx playwright install --with-deps chromium
+      - name: E2E + auditoría AA (Playwright contra el sistema real)
+        run: npx playwright test
+      - name: Reporte de Playwright (solo si falla)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright
+          path: playwright-report/
+          retention-days: 7

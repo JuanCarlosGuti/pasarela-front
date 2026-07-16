@@ -206,9 +206,28 @@ orden no pagada → el 422 del backend explicado ("solo ventas pagadas").
 
 ---
 
+## Fuera de sprint — Simulación para demo
+
+> Se agregó después de cerrar F4 (vF0.4.0), a pedido explícito para tener
+> algo que mostrar mientras T-007 (backend) no cierre con un proveedor real.
+
+### ✅ HUF-014 — Tus liquidaciones (simulado)
+
+> **SOLO SIMULACIÓN** (HU-025 del backend): ningún dato acá es dinero real
+> ni habla con un proveedor real — reemplazar cuando T-007 cierre.
+
+**Como** Dueño **quiero** ver cómo se vería la conversión de mi cripto a COP
+**para** entender la promesa de valor antes de que exista el proveedor real.
+
+**Criterios:** sección en el tablero (`GET /api/liquidaciones`, rol COMERCIO)
+con el desglose completo (bruto, fee de rampa, tasa, comisión, neto, cuenta
+destino) y una etiqueta "Simulado" siempre visible; vacío amable.
+
+---
+
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_
 
-### ⬜ HUF-012 — Verificación de comercios (admin)
+### ✅ HUF-012 — Verificación de comercios (admin)
 
 **Como** Admin **quiero** aprobar o rechazar comercios **para** controlar
 quién cobra.
@@ -216,7 +235,7 @@ quién cobra.
 **Criterios:** lista de comercios con estado; detalle → APROBAR/RECHAZAR
 (confirmación previa); errores 409 de transición inválida mostrados.
 
-### ⬜ HUF-013 — Límites por comercio (admin)
+### ✅ HUF-013 — Límites por comercio (admin)
 
 **Como** Admin **quiero** ajustar topes por transacción y por mes **para**
 gestionar riesgo.
@@ -224,7 +243,7 @@ gestionar riesgo.
 **Criterios:** formulario de límites (PUT `/api/comercios/{id}/limites`),
 validaciones y confirmación del cambio.
 
-### ⬜ TF-004 — Accesibilidad y endurecimiento del cliente
+### ✅ TF-004 — Accesibilidad y endurecimiento del cliente
 
 **Como** Dev **quiero** cerrar el MVP con auditoría de accesibilidad y
 seguridad de cliente **para** salir al piloto sin vergüenzas.

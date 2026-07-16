@@ -1,16 +1,17 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ResumenDeVentas, VentasApi } from '../../nucleo/api/ventas-api';
 import { HistorialDeVentas } from './historial-de-ventas';
+import { LiquidacionesSimuladas } from './liquidaciones-simuladas';
 
 /**
- * El tablero del comercio (HUF-008/009): ventas de hoy y del mes en
- * tarjetas grandes, más el historial filtrado debajo. El resumen se
- * refresca solo al volver a la pestaña — un dueño que la deja abierta en
- * el mostrador no debería ver números viejos.
+ * El tablero del comercio (HUF-008/009/014): ventas de hoy y del mes en
+ * tarjetas grandes, el historial filtrado y las liquidaciones simuladas
+ * debajo. El resumen se refresca solo al volver a la pestaña — un dueño que
+ * la deja abierta en el mostrador no debería ver números viejos.
  */
 @Component({
   selector: 'app-pagina-tablero',
-  imports: [HistorialDeVentas],
+  imports: [HistorialDeVentas, LiquidacionesSimuladas],
   templateUrl: './pagina-tablero.html',
   styleUrl: './pagina-tablero.scss',
 })
