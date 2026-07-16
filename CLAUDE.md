@@ -136,7 +136,7 @@ sprint = merge `develop`→`main` + tag `vF0.<sprint>.0` + retro de 3 líneas.
 - [x] **Sprint F1:** autenticación (login, sesión, guardas, expiración) — `vF0.1.0`
 - [x] **Sprint F2:** la caja — teclado, QR, PAGADO ✓, historial de la jornada — `vF0.2.0`
 - [x] **Sprint F3:** pagador (público) + registro de comercio — `vF0.3.0`
-- [ ] **Sprint F4:** tablero (ventas día/mes, historial, CSV, comprobante)
+- [x] **Sprint F4:** tablero (ventas día/mes, historial, CSV, comprobante) — `vF0.4.0`
 - [ ] **Sprint F5:** admin + accesibilidad + endurecimiento
 
 Backlog y sprints al detalle: `docs/gestion/02` y `docs/gestion/03`.
