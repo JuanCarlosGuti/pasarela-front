@@ -1,8 +1,11 @@
 import { APIRequestContext, expect } from '@playwright/test';
 
 export const API = 'http://localhost:8080';
-const ADMIN_EMAIL = process.env['PASARELA_ADMIN_EMAIL'] ?? 'admin@pasarela.local';
-const ADMIN_CONTRASENA = process.env['PASARELA_ADMIN_CONTRASENA'] ?? 'admin-local-12345678';
+// Credenciales del admin LOCAL (no son un secreto: son el default documentado
+// del perfil local del backend, solo para desarrollo). Un solo lugar: los
+// specs las importan de aquí en vez de repetir el default.
+export const ADMIN_EMAIL = process.env['PASARELA_ADMIN_EMAIL'] ?? 'admin@pasarela.local';
+export const ADMIN_CONTRASENA = process.env['PASARELA_ADMIN_CONTRASENA'] ?? 'admin-local-12345678';
 
 /** NIT aleatorio con dígito de verificación DIAN válido (el backend valida). */
 export function nitAleatorio(): string {

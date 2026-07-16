@@ -1,8 +1,5 @@
 import { test, expect, type Page, type APIRequestContext } from '@playwright/test';
-import { API, nitAleatorio } from './ayudas';
-
-const ADMIN_EMAIL = process.env['PASARELA_ADMIN_EMAIL'] ?? 'admin@pasarela.local';
-const ADMIN_CONTRASENA = process.env['PASARELA_ADMIN_CONTRASENA'] ?? 'admin-local-12345678';
+import { ADMIN_CONTRASENA, ADMIN_EMAIL, API, nitAleatorio } from './ayudas';
 
 async function comercioPendiente(request: APIRequestContext, razonSocial: string): Promise<void> {
   const registro = await request.post(`${API}/api/comercios`, {

@@ -36,13 +36,17 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    env:
+      # Clave EFÍMERA del postgres del CI: única por corrida, muere con el
+      # contenedor. No es un secreto — no protege nada fuera de este job.
+      DB_PASSWORD: ci-${{ github.run_id }}
     services:
       postgres:
         image: postgres:17-alpine
         env:
           POSTGRES_DB: pagos
           POSTGRES_USER: pagos
-          POSTGRES_PASSWORD: pagos-ci
+          POSTGRES_PASSWORD: ci-${{ github.run_id }}
         ports:
           - 5432:5432
         options: >-
@@ -69,8 +73,6 @@ jobs:
 
       - name: Arrancar el backend (perfil local + proveedor simulado)
         working-directory: backend
-        env:
-          DB_PASSWORD: pagos-ci
         run: |
           ./mvnw --batch-mode -q spring-boot:run -Dspring-boot.run.profiles=local &
           echo "Esperando el health del backend..."

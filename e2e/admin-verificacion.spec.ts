@@ -1,8 +1,5 @@
 import { test, expect, type Page, type APIRequestContext } from '@playwright/test';
-import { API, nitAleatorio } from './ayudas';
-
-const ADMIN_EMAIL = process.env['PASARELA_ADMIN_EMAIL'] ?? 'admin@pasarela.local';
-const ADMIN_CONTRASENA = process.env['PASARELA_ADMIN_CONTRASENA'] ?? 'admin-local-12345678';
+import { ADMIN_CONTRASENA, ADMIN_EMAIL, API, nitAleatorio } from './ayudas';
 
 /** Registra un comercio SIN verificar (queda PENDIENTE, que es el punto). */
 async function comercioPendiente(
