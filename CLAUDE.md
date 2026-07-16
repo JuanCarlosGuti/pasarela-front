@@ -111,6 +111,7 @@ Detalle completo en `docs/02-arquitectura.md`.
 | Arquitectura                                    | `docs/02-arquitectura.md`                         |
 | Guía de estilo / pruebas                        | `docs/03-guia-estilo.md`                          |
 | Diseño UI (tokens, mobile-first, accesibilidad) | `docs/04-diseno-ui.md`                            |
+| Auditoría AA + endurecimiento (TF-004)          | `docs/05-auditoria-accesibilidad.md`              |
 | Decisiones de arquitectura                      | `docs/adr/`                                       |
 | Flujo de trabajo Git                            | `docs/gestion/01-flujo-de-trabajo-git.md`         |
 | **Backlog de historias (fuente de verdad)**     | `docs/gestion/02-backlog-historias-de-usuario.md` |
@@ -137,6 +138,6 @@ sprint = merge `develop`→`main` + tag `vF0.<sprint>.0` + retro de 3 líneas.
 - [x] **Sprint F2:** la caja — teclado, QR, PAGADO ✓, historial de la jornada — `vF0.2.0`
 - [x] **Sprint F3:** pagador (público) + registro de comercio — `vF0.3.0`
 - [x] **Sprint F4:** tablero (ventas día/mes, historial, CSV, comprobante) — `vF0.4.0`
-- [ ] **Sprint F5:** admin + accesibilidad + endurecimiento
+- [x] **Sprint F5:** admin + accesibilidad + endurecimiento — `vF1.0.0` (MVP front completo)
 
 Backlog y sprints al detalle: `docs/gestion/02` y `docs/gestion/03`.

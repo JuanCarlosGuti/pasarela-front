@@ -1,9 +1,11 @@
 // Tokens de diseño (docs/04): TODO color, espacio o radio sale de aquí.
 // Punto de partida honesto — se ajustan cuando exista identidad visual.
+// --color-alerta pasó de #e65100 a #bf360c en TF-004: el naranja original
+// daba 3.2:1 con texto blanco y AA exige 4.5:1 (hallazgo de axe-core).
 :root {
   --color-primario: #0d47a1;
   --color-exito: #1b5e20;
-  --color-alerta: #e65100;
+  --color-alerta: #bf360c;
   --color-error: #b71c1c;
   --color-fondo: #fafafa;
   --color-texto: #1a1a1a;
