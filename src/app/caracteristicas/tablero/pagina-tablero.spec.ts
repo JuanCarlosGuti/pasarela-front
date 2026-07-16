@@ -34,6 +34,10 @@ describe('PaginaTablero — resumen', () => {
       .flush({ ordenes: [], totalElementos: 0, pagina: 0, tamano: 20 });
   }
 
+  function responderLiquidacionesVacias() {
+    http.expectOne((req) => req.url === '/api/liquidaciones').flush([]);
+  }
+
   it('muestra "cargando" mientras llega la respuesta', () => {
     const fixture = crear();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Cargando');
@@ -41,6 +45,7 @@ describe('PaginaTablero — resumen', () => {
       .expectOne('/api/ventas/resumen')
       .flush({ dia: { total: 0, cantidad: 0 }, mes: { total: 0, cantidad: 0 } });
     responderHistorialVacio();
+    responderLiquidacionesVacias();
   });
 
   it('muestra el total y la cantidad de hoy y del mes, formateados', () => {
@@ -50,6 +55,7 @@ describe('PaginaTablero — resumen', () => {
       mes: { total: 320000, cantidad: 9 },
     });
     responderHistorialVacio();
+    responderLiquidacionesVacias();
     fixture.detectChanges();
 
     const html = fixture.nativeElement as HTMLElement;
@@ -63,6 +69,7 @@ describe('PaginaTablero — resumen', () => {
     const fixture = crear();
     http.expectOne('/api/ventas/resumen').flush({}, { status: 500, statusText: 'Error' });
     responderHistorialVacio();
+    responderLiquidacionesVacias();
     fixture.detectChanges();
 
     const html = fixture.nativeElement as HTMLElement;
@@ -84,6 +91,7 @@ describe('PaginaTablero — resumen', () => {
       mes: { total: 320000, cantidad: 9 },
     });
     responderHistorialVacio();
+    responderLiquidacionesVacias();
     fixture.detectChanges();
 
     Object.defineProperty(document, 'visibilityState', {
@@ -107,6 +115,7 @@ describe('PaginaTablero — resumen', () => {
       mes: { total: 320000, cantidad: 9 },
     });
     responderHistorialVacio();
+    responderLiquidacionesVacias();
     fixture.destroy();
 
     document.dispatchEvent(new Event('visibilitychange'));
