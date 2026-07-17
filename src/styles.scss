@@ -1,4 +1,7 @@
-// Estilos globales: base mínima mobile-first sobre los tokens de docs/04.
+// Estilos globales: base mobile-first sobre los tokens de docs/04.
+// Tipografía Inter (variable) EMPAQUETADA con la app — cero peticiones a
+// CDNs externos; la caja debe funcionar igual con internet lenta.
+@use '@fontsource-variable/inter';
 @use './app/compartido/estilos/tokens';
 
 *,
@@ -14,11 +17,26 @@ body {
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Inter Variable', system-ui, sans-serif;
   background: var(--color-fondo);
   color: var(--color-texto);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+// Los montos se alinean en columnas: dígitos tabulares en toda la app
+.monto,
+.total,
+.bruto,
+.neto,
+td {
+  font-variant-numeric: tabular-nums;
 }
 
 // Accesibilidad: el foco SIEMPRE se ve (docs/04)
