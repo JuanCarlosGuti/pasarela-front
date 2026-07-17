@@ -6,6 +6,11 @@
   text-align: center;
   margin: var(--espacio-3) 0;
   min-height: 1.2em;
+  // el monto lleva el gradiente de marca: es EL número de la pantalla
+  background: var(--gradiente-primario);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .teclado {
@@ -22,12 +27,18 @@
     border: 1px solid var(--color-borde);
     border-radius: var(--radio);
     background: var(--color-superficie);
+    box-shadow: var(--sombra-tarjeta);
     cursor: pointer;
+    transition: transform 80ms ease;
+
+    &:active {
+      transform: scale(0.97);
+    }
   }
 
   .cobrar {
     grid-column: 1 / -1;
-    background: var(--color-primario);
+    background: var(--gradiente-primario);
     color: #fff;
     border: none;
     font-size: 1.3rem;
@@ -64,6 +75,7 @@
   background: var(--color-superficie);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio);
+  box-shadow: var(--sombra-tarjeta);
   word-break: break-all;
 }
 
@@ -72,7 +84,7 @@
   margin: var(--espacio-2) 0;
   padding: var(--espacio-3) var(--espacio-4);
   min-height: 44px;
-  background: var(--color-primario);
+  background: var(--gradiente-primario);
   color: #fff;
   text-decoration: none;
   border-radius: var(--radio);
@@ -177,7 +189,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
-    background: var(--color-primario);
+    background: var(--gradiente-primario);
     border: none;
     border-radius: var(--radio);
     cursor: pointer;

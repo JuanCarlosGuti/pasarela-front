@@ -1,16 +1,31 @@
-// Tokens de diseño (docs/04): TODO color, espacio o radio sale de aquí.
-// Punto de partida honesto — se ajustan cuando exista identidad visual.
-// --color-alerta pasó de #e65100 a #bf360c en TF-004: el naranja original
-// daba 3.2:1 con texto blanco y AA exige 4.5:1 (hallazgo de axe-core).
+// Tokens de diseño (docs/04, rediseño HUF-017: "claro refinado fintech").
+// TODO color, espacio, sombra o radio sale de aquí. Los pares texto/fondo
+// cumplen AA (4.5:1) — la auditoría de axe en el CI lo re-verifica en cada
+// push, así que un cambio aquí que rompa contraste rompe la build.
 :root {
-  --color-primario: #0d47a1;
+  // marca: azul profundo → violeta (el gradiente es la firma visual)
+  --color-primario: #2540c8;
+  --color-acento: #6d28d9;
+  --gradiente-primario: linear-gradient(135deg, #2540c8 0%, #6d28d9 100%);
+
+  // cabecera oscura (azul noche) con el mismo lenguaje del gradiente
+  --gradiente-cabecera: linear-gradient(120deg, #0d1330 0%, #251a52 100%);
+
+  // semánticos (--color-alerta pasó de #e65100 a #bf360c en TF-004: el
+  // naranja original daba 3.2:1 con blanco y AA exige 4.5:1)
   --color-exito: #1b5e20;
   --color-alerta: #bf360c;
   --color-error: #b71c1c;
-  --color-fondo: #fafafa;
-  --color-texto: #1a1a1a;
+
+  // superficies
+  --color-fondo: #f6f7fb;
+  --color-texto: #10162a;
+  --color-texto-suave: #5a6072;
   --color-superficie: #ffffff;
-  --color-borde: #d7d7d7;
+  --color-borde: #e3e6f0;
+
+  // profundidad: sombra doble suave, estilo tarjeta fintech
+  --sombra-tarjeta: 0 1px 3px rgba(16, 22, 42, 0.06), 0 8px 24px rgba(16, 22, 42, 0.08);
 
   --espacio-1: 4px;
   --espacio-2: 8px;
@@ -19,5 +34,6 @@
   --espacio-5: 32px;
   --espacio-6: 48px;
 
-  --radio: 12px;
+  --radio: 14px;
+  --radio-chico: 8px;
 }

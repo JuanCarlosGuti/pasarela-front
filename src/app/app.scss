@@ -1,16 +1,32 @@
-// Layout raíz mobile-first: cabecera fija simple + contenido con aire.
+// Layout raíz mobile-first (HUF-017): cabecera azul noche con el gradiente
+// de marca como firma visual + contenido con aire sobre fondo suave.
 .cabecera {
   display: flex;
   align-items: center;
   padding: var(--espacio-3);
-  background: var(--color-primario);
+  background: var(--gradiente-cabecera);
   color: #fff;
+  // línea de marca: el gradiente primario como filo inferior
+  border-bottom: 3px solid transparent;
+  border-image: var(--gradiente-primario) 1;
 }
 
 .marca {
-  font-weight: 700;
-  font-size: 1.1rem;
-  letter-spacing: 0.02em;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+
+  // el punto de marca lleva el gradiente
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: var(--espacio-2);
+    border-radius: 3px;
+    background: var(--gradiente-primario);
+    transform: rotate(45deg);
+  }
 }
 
 .contenido {
@@ -33,6 +49,7 @@
     &:hover,
     &:focus-visible {
       text-decoration: underline;
+      text-underline-offset: 6px;
     }
   }
 }
@@ -43,8 +60,12 @@
   min-height: 44px;
   font-weight: 600;
   color: #fff;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: var(--radio);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radio-chico);
   cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
 }

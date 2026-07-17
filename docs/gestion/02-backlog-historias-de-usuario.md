@@ -255,6 +255,23 @@ liquidación llegue a donde es; **como** Admin quiero la cola paginada.
   bloquea — la convención de la plataforma, visible.
 - El panel admin pagina (Anterior/Siguiente) contra el GET paginado.
 
+### ✅ HUF-017 — Rediseño visual: claro refinado fintech
+
+> Feedback de uso real: el diseño era funcional pero plano. Dirección
+> elegida por el dueño del producto: claro refinado con acento fintech.
+
+**Como** Dueño del producto **quiero** una identidad visual sofisticada
+**para** que la pasarela se vea a la altura de lo que hace.
+
+**Criterios:**
+
+- Tokens nuevos: azul profundo → violeta con gradiente de marca, cabecera
+  azul noche, sombras de tarjeta, radios suaves, Inter variable EMPAQUETADA
+  (cero CDNs — la caja funciona igual con internet lenta).
+- Mobile-first intacto y AA verificado por axe en el CI (los pares
+  texto/fondo nuevos cumplen 4.5:1).
+- El monto de la caja y las tarjetas del tablero llevan la firma visual.
+
 ---
 
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_

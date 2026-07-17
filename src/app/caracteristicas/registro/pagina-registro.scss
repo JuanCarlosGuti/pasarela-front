@@ -26,7 +26,7 @@ button {
   font-size: 1.05rem;
   font-weight: 700;
   color: #fff;
-  background: var(--color-primario);
+  background: var(--gradiente-primario);
   border: none;
   border-radius: var(--radio);
   cursor: pointer;
@@ -73,7 +73,7 @@ button {
     margin-top: var(--espacio-3);
     padding: var(--espacio-3) var(--espacio-4);
     min-height: 44px;
-    background: var(--color-primario);
+    background: var(--gradiente-primario);
     color: #fff;
     text-decoration: none;
     border-radius: var(--radio);
