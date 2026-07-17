@@ -14,7 +14,12 @@ test.describe('HUF-002: sesión y guardas (contra el backend real)', () => {
       data: {
         razonSocial: 'Tienda E2E Sesion',
         nit: nitAleatorio(),
-        cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001112233', titular: 'Tienda E2E' },
+        cuentaLiquidacion: {
+          banco: 'Nequi',
+          tipo: 'AHORROS',
+          numero: '3001112233',
+          titular: 'Tienda E2E',
+        },
         credenciales: { email: correo, contrasena },
       },
     });
@@ -36,7 +41,12 @@ test.describe('HUF-002: sesión y guardas (contra el backend real)', () => {
       data: {
         razonSocial: 'Tienda E2E Salir',
         nit: nitAleatorio(),
-        cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001112233', titular: 'Tienda E2E' },
+        cuentaLiquidacion: {
+          banco: 'Nequi',
+          tipo: 'AHORROS',
+          numero: '3001112233',
+          titular: 'Tienda E2E',
+        },
         credenciales: { email: correo, contrasena },
       },
     });

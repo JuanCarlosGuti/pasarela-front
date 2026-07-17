@@ -34,8 +34,10 @@ describe('PaginaAdmin', () => {
     };
   }
 
-  function responder(comercios: unknown[]) {
-    http.expectOne((req) => req.url === '/api/comercios').flush(comercios);
+  function responder(comercios: unknown[], totalElementos = comercios.length) {
+    http
+      .expectOne((req) => req.url === '/api/comercios')
+      .flush({ comercios, totalElementos, pagina: 0, tamano: 20 });
   }
 
   it('carga la cola al iniciar y muestra cada comercio con su estado', () => {
@@ -173,6 +175,23 @@ describe('PaginaAdmin', () => {
     expect(
       (fixture.nativeElement as HTMLElement).querySelector('[role="alert"]')?.textContent,
     ).toContain('No pudimos cargar');
+  });
+
+  it('con más comercios que la página, Siguiente pide la página 1 (HUF-016)', () => {
+    const fixture = crear();
+    responder(
+      Array.from({ length: 20 }, (_, i) => comercio(`c${i}`)),
+      45,
+    );
+    fixture.detectChanges();
+
+    const html = fixture.nativeElement as HTMLElement;
+    expect(html.querySelector<HTMLButtonElement>('button.anterior')!.disabled).toBe(true);
+
+    html.querySelector<HTMLButtonElement>('button.siguiente')!.click();
+    const peticion = http.expectOne((req) => req.url === '/api/comercios');
+    expect(peticion.request.params.get('pagina')).toBe('1');
+    peticion.flush({ comercios: [], totalElementos: 45, pagina: 1, tamano: 20 });
   });
 
   it('la fila muestra los topes vigentes del comercio (HUF-013)', () => {

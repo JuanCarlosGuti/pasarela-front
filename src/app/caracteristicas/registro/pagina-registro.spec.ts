@@ -39,7 +39,8 @@ describe('PaginaRegistro (HUF-007)', () => {
   const datosValidos = {
     razonSocial: 'Café Central',
     nit: '900650321-2',
-    tipo: 'NEQUI',
+    banco: 'Bancolombia',
+    tipo: 'AHORROS',
     numero: '3001234567',
     titular: 'Café Central',
     email: 'ana@cafe.co',
@@ -86,7 +87,12 @@ describe('PaginaRegistro (HUF-007)', () => {
     expect(peticion.request.body).toEqual({
       razonSocial: 'Café Central',
       nit: '900650321-2',
-      cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001234567', titular: 'Café Central' },
+      cuentaLiquidacion: {
+        banco: 'Bancolombia',
+        tipo: 'AHORROS',
+        numero: '3001234567',
+        titular: 'Café Central',
+      },
       credenciales: { email: 'ana@cafe.co', contrasena: 'secreta-12345678' },
     });
     peticion.flush({
@@ -100,6 +106,37 @@ describe('PaginaRegistro (HUF-007)', () => {
 
     expect(html.textContent).toContain('Tu comercio está en verificación');
     expect(html.querySelector('a[href="/entrar"]')).not.toBeNull();
+  });
+
+  it('elegir una billetera fija el tipo en AHORROS y lo bloquea (HUF-016)', () => {
+    const fixture = crear();
+    const html = fixture.nativeElement as HTMLElement;
+
+    llenar(html, { banco: 'Nequi' });
+    fixture.detectChanges();
+
+    const tipo = html.querySelector<HTMLSelectElement>('select[name="tipo"]')!;
+    expect(tipo.disabled).toBe(true);
+    expect(html.textContent).toContain('Las billeteras se registran como cuenta de ahorros');
+
+    // y el envío lleva AHORROS aunque el control esté bloqueado
+    llenar(html, { ...datosValidos, banco: 'Nequi', tipo: 'AHORROS' });
+    fixture.detectChanges();
+    enviar(html);
+    const peticion = http.expectOne('/api/comercios');
+    expect(peticion.request.body.cuentaLiquidacion).toEqual({
+      banco: 'Nequi',
+      tipo: 'AHORROS',
+      numero: '3001234567',
+      titular: 'Café Central',
+    });
+    peticion.flush({
+      id: 'com-1',
+      razonSocial: 'Café Central',
+      nit: '900650321-2',
+      estadoVerificacion: 'PENDIENTE',
+      registradoEn: '2026-07-16T10:00:00Z',
+    });
   });
 
   it('muestra el requisito de la contraseña (mínimo 8, la regla real del backend) (HUF-015)', () => {

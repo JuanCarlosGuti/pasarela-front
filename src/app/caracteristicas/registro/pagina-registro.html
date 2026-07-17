@@ -21,12 +21,21 @@
         <p class="aviso">El dígito de verificación del NIT no corresponde. Revísalo.</p>
       }
 
+      <label for="banco">Banco o billetera</label>
+      <select id="banco" name="banco" formControlName="banco" required>
+        @for (banco of bancos; track banco) {
+          <option [value]="banco">{{ banco }}</option>
+        }
+      </select>
+
       <label for="tipo">Tipo de cuenta</label>
       <select id="tipo" name="tipo" formControlName="tipo" required>
-        <option value="NEQUI">Nequi</option>
         <option value="AHORROS">Cuenta de ahorros</option>
         <option value="CORRIENTE">Cuenta corriente</option>
       </select>
+      @if (esBilletera) {
+        <p class="pista">Las billeteras se registran como cuenta de ahorros</p>
+      }
 
       <label for="numero">Número de cuenta</label>
       <input id="numero" name="numero" formControlName="numero" required />

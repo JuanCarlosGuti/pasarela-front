@@ -10,7 +10,12 @@ async function comercioPendiente(
     data: {
       razonSocial,
       nit: nitAleatorio(),
-      cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001112233', titular: razonSocial },
+      cuentaLiquidacion: {
+        banco: 'Nequi',
+        tipo: 'AHORROS',
+        numero: '3001112233',
+        titular: razonSocial,
+      },
       credenciales: {
         email: `e2e-adm-${Date.now()}-${Math.random()}@front.co`,
         contrasena: 'secreta-e2e-12345',

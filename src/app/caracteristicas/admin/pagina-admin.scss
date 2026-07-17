@@ -131,6 +131,26 @@
   border: 1px solid var(--color-borde);
 }
 
+.paginacion {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--espacio-3);
+
+  button {
+    padding: var(--espacio-2) var(--espacio-3);
+    min-height: 44px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
 .confirmacion {
   margin-top: var(--espacio-3);
   padding: var(--espacio-3);

@@ -240,6 +240,21 @@ contraseña **para** no perderme ni registrarme con una clave mal escrita.
 - El requisito mínimo visible ("Mínimo 8 caracteres") espeja la regla REAL
   del backend (CrearCuentaComercioService) — el front no inventa políticas.
 
+### ✅ HUF-016 — Banco de la cuenta y cola paginada
+
+> Feedback de uso real (con HU-027 del backend): el "tipo NEQUI" mezclaba
+> el banco con el tipo, y la cola del admin crecía sin paginador.
+
+**Como** Dueño **quiero** declarar mi banco/billetera **para** que la
+liquidación llegue a donde es; **como** Admin quiero la cola paginada.
+
+**Criterios:**
+
+- Registro con banco/billetera (select) + tipo AHORROS|CORRIENTE; elegir
+  una billetera (Nequi, Daviplata, Movii) fija el tipo en AHORROS y lo
+  bloquea — la convención de la plataforma, visible.
+- El panel admin pagina (Anterior/Siguiente) contra el GET paginado.
+
 ---
 
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_

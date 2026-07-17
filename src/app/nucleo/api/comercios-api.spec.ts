@@ -23,7 +23,12 @@ describe('ComerciosApi', () => {
       .registrar({
         razonSocial: 'Café Central',
         nit: '900650321-2',
-        cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001234567', titular: 'Café Central' },
+        cuentaLiquidacion: {
+          banco: 'Nequi',
+          tipo: 'AHORROS',
+          numero: '3001234567',
+          titular: 'Café Central',
+        },
         credenciales: { email: 'ana@cafe.co', contrasena: 'secreta-12345678' },
       })
       .subscribe((r) => (respuesta = r));
@@ -57,17 +62,20 @@ describe('ComerciosApi', () => {
     });
   });
 
-  it('lista los comercios con GET /api/comercios, con filtro de estado opcional (HUF-012)', () => {
+  it('lista los comercios paginados, con filtro de estado opcional (HUF-012/016)', () => {
     api.listar().subscribe();
     const sinFiltro = http.expectOne((req) => req.url === '/api/comercios');
     expect(sinFiltro.request.method).toBe('GET');
     expect(sinFiltro.request.params.has('estado')).toBe(false);
-    sinFiltro.flush([]);
+    expect(sinFiltro.request.params.get('pagina')).toBe('0');
+    expect(sinFiltro.request.params.get('tamano')).toBe('20');
+    sinFiltro.flush({ comercios: [], totalElementos: 0, pagina: 0, tamano: 20 });
 
-    api.listar('PENDIENTE').subscribe();
+    api.listar('PENDIENTE', 2, 10).subscribe();
     const conFiltro = http.expectOne((req) => req.url === '/api/comercios');
     expect(conFiltro.request.params.get('estado')).toBe('PENDIENTE');
-    conFiltro.flush([]);
+    expect(conFiltro.request.params.get('pagina')).toBe('2');
+    conFiltro.flush({ comercios: [], totalElementos: 0, pagina: 2, tamano: 10 });
   });
 
   it('decide la verificación con POST /api/comercios/{id}/verificacion (HUF-012)', () => {

@@ -44,6 +44,9 @@ export class PaginaAdmin implements OnInit {
   protected readonly cargando = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly comercios = signal<ComercioRegistrado[]>([]);
+  protected readonly totalElementos = signal(0);
+  protected paginaActual = 0;
+  private readonly tamanoPagina = 20;
   protected readonly confirmando = signal<Confirmacion | null>(null);
   protected readonly errorDecision = signal<string | null>(null);
   protected readonly decidiendo = signal(false);
@@ -61,7 +64,25 @@ export class PaginaAdmin implements OnInit {
   }
 
   protected filtrar(): void {
+    this.paginaActual = 0;
     this.cargar();
+  }
+
+  protected paginaAnterior(): void {
+    if (this.paginaActual === 0) {
+      return;
+    }
+    this.paginaActual -= 1;
+    this.cargar();
+  }
+
+  protected paginaSiguiente(): void {
+    this.paginaActual += 1;
+    this.cargar();
+  }
+
+  protected get hayPaginaSiguiente(): boolean {
+    return (this.paginaActual + 1) * this.tamanoPagina < this.totalElementos();
   }
 
   protected pedirConfirmacion(
@@ -196,9 +217,10 @@ export class PaginaAdmin implements OnInit {
   private cargar(): void {
     this.cargando.set(true);
     this.error.set(null);
-    this.api.listar(this.filtro || undefined).subscribe({
-      next: (comercios) => {
-        this.comercios.set(comercios);
+    this.api.listar(this.filtro || undefined, this.paginaActual, this.tamanoPagina).subscribe({
+      next: (pagina) => {
+        this.comercios.set(pagina.comercios);
+        this.totalElementos.set(pagina.totalElementos);
         this.cargando.set(false);
       },
       error: () => {
