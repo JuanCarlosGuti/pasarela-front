@@ -52,7 +52,7 @@
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
   text-align: center;
   margin: var(--espacio-2) 0;
 }
@@ -92,7 +92,7 @@
 }
 
 .referencia {
-  color: #555;
+  color: var(--color-texto-suave);
   font-size: 0.85rem;
   word-break: break-all;
 }
@@ -124,11 +124,11 @@
 
 .cuenta {
   font-weight: 600;
-  color: var(--color-alerta);
+  color: var(--color-alerta-texto);
 }
 
 .sin-conexion {
-  color: var(--color-alerta);
+  color: var(--color-alerta-texto);
   font-weight: 600;
 }
 
@@ -179,7 +179,7 @@
   padding: var(--espacio-5) var(--espacio-3);
 
   h1 {
-    color: var(--color-alerta);
+    color: var(--color-alerta-texto);
   }
 
   .cobrar-de-nuevo {

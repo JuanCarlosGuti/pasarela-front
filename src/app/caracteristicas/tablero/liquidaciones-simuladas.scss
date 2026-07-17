@@ -23,17 +23,17 @@
 }
 
 .aviso {
-  color: #666;
+  color: var(--color-texto-suave);
   font-size: 0.85rem;
   margin: var(--espacio-1) 0 var(--espacio-3);
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 .vacio {
-  color: #666;
+  color: var(--color-texto-suave);
   text-align: center;
   padding: var(--espacio-4) 0;
 }
@@ -66,7 +66,7 @@
   }
 
   .fecha {
-    color: #666;
+    color: var(--color-texto-suave);
     font-weight: 400;
   }
 
@@ -82,7 +82,7 @@
     }
 
     dt {
-      color: #666;
+      color: var(--color-texto-suave);
     }
 
     dd {

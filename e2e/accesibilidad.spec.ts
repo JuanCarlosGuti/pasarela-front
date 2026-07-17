@@ -53,6 +53,35 @@ test.describe('TF-004: accesibilidad AA (axe, contra el backend real)', () => {
     await sinViolacionesAA(page);
   });
 
+  test('el tono oscuro (HUF-018) también pasa AA — login y registro', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('tema', 'oscuro'));
+
+    await page.goto('/entrar');
+    await expect(page.locator('html')).toHaveClass(/tema-oscuro/);
+    await sinViolacionesAA(page);
+
+    await page.goto('/registro');
+    await sinViolacionesAA(page);
+  });
+
+  test('el botón de la cabecera alterna el tono y la preferencia sobrevive la navegación', async ({
+    page,
+  }) => {
+    await page.goto('/entrar');
+    await page.getByRole('button', { name: 'Cambiar a tono oscuro' }).click();
+    await expect(page.locator('html')).toHaveClass(/tema-oscuro/);
+
+    // navegar (in-SPA) conserva el tema; recargar también, porque la
+    // preferencia visual SÍ persiste (no es dato sensible, ADR-F002 no aplica)
+    await page.getByRole('link', { name: 'Registro' }).click();
+    await expect(page.locator('html')).toHaveClass(/tema-oscuro/);
+    await page.reload();
+    await expect(page.locator('html')).toHaveClass(/tema-oscuro/);
+
+    await page.getByRole('button', { name: 'Cambiar a tono claro' }).click();
+    await expect(page.locator('html')).not.toHaveClass(/tema-oscuro/);
+  });
+
   test('el tablero y el panel admin también pasan AA', async ({ page, request }) => {
     const correo = `e2e-a11y-tablero-${Date.now()}@front.co`;
     const contrasena = 'secreta-e2e-12345';

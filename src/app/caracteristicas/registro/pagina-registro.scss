@@ -38,13 +38,13 @@ button {
 }
 
 .aviso {
-  color: var(--color-alerta);
+  color: var(--color-alerta-texto);
   margin: 0;
   font-size: 0.9rem;
 }
 
 .pista {
-  color: #666;
+  color: var(--color-texto-suave);
   margin: 0;
   font-size: 0.85rem;
 }
@@ -61,7 +61,7 @@ button {
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
   margin: var(--espacio-2) 0 0;
 }
 

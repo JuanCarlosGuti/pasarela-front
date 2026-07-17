@@ -272,6 +272,24 @@ liquidación llegue a donde es; **como** Admin quiero la cola paginada.
   texto/fondo nuevos cumplen 4.5:1).
 - El monto de la caja y las tarjetas del tablero llevan la firma visual.
 
+### ✅ HUF-018 — Tono oscuro y cola de a 10
+
+> Feedback de uso real tras el rediseño.
+
+**Como** usuario **quiero** un tono oscuro a un toque **para** trabajar
+cómodo; **como** Admin quiero la cola de a 10 (se revisa, no se hojea).
+
+**Criterios:**
+
+- Botón 🌙/☀ en la cabecera; la preferencia persiste en localStorage (un
+  tema NO es dato sensible — regla 3 protege datos, no gustos) y el
+  default respeta prefers-color-scheme del sistema.
+- Una clase en <html> redefine tokens; los componentes no saben de temas.
+  Deuda saldada: los grises #666/#555 escritos a mano pasaron al token.
+- axe audita AMBOS tonos en el CI. Hallazgo real del escaneo oscuro: los
+  inputs no heredan color (el user-agent los pinta negros) — corregido
+  global. El paginador del admin queda en 10 por página.
+
 ---
 
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_
