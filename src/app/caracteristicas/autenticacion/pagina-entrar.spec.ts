@@ -148,4 +148,9 @@ describe('PaginaEntrar (HUF-001)', () => {
 
     http.expectOne('/api/auth/login').flush({ token: tokenConClaims({ rol: 'COMERCIO' }) });
   });
+
+  it('ofrece el enlace al registro para quien aún no tiene cuenta (HUF-015)', () => {
+    const html = crear().nativeElement as HTMLElement;
+    expect(html.querySelector('a[href="/registro"]')).not.toBeNull();
+  });
 });
