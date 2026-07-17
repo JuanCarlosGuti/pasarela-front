@@ -68,9 +68,14 @@ describe('App (layout raíz)', () => {
     expect(enlaces).toContain('Tu negocio');
   });
 
-  it('sin sesión, no hay navegación (nada que ver antes de entrar)', async () => {
+  it('sin sesión, la cabecera ofrece Entrar y Registro (HUF-015)', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    expect((fixture.nativeElement as HTMLElement).querySelector('nav')).toBeNull();
+    const enlaces = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('nav a'),
+    ).map((a) => a.textContent?.trim());
+
+    expect(enlaces).toContain('Entrar');
+    expect(enlaces).toContain('Registro');
   });
 });

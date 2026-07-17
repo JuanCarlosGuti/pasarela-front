@@ -43,6 +43,23 @@ button {
   font-size: 0.9rem;
 }
 
+.pista {
+  color: #666;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.pie-enlace {
+  margin-top: var(--espacio-4);
+  max-width: 480px;
+  text-align: center;
+
+  a {
+    color: var(--color-primario);
+    font-weight: 600;
+  }
+}
+
 .error {
   color: var(--color-error);
   margin: var(--espacio-2) 0 0;

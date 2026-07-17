@@ -43,8 +43,24 @@
         name="contrasena"
         type="password"
         formControlName="contrasena"
+        autocomplete="new-password"
+        aria-describedby="pista-contrasena"
         required
       />
+      <p id="pista-contrasena" class="pista">Mínimo 8 caracteres</p>
+
+      <label for="confirmacion">Confirma la contraseña</label>
+      <input
+        id="confirmacion"
+        name="confirmacion"
+        type="password"
+        formControlName="confirmacion"
+        autocomplete="new-password"
+        required
+      />
+      @if (contrasenasNoCoinciden) {
+        <p class="aviso">Las contraseñas no coinciden. Revísalas.</p>
+      }
 
       @if (error(); as mensaje) {
         <p role="alert" class="error">{{ mensaje }}</p>
@@ -58,5 +74,7 @@
         }
       </button>
     </form>
+
+    <p class="pie-enlace">¿Ya tienes cuenta? <a routerLink="/entrar">Inicia sesión</a></p>
   </section>
 }
