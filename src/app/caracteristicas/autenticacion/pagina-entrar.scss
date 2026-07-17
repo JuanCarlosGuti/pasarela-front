@@ -40,3 +40,14 @@ button {
   color: var(--color-error);
   margin: var(--espacio-2) 0 0;
 }
+
+.pie-enlace {
+  margin-top: var(--espacio-4);
+  max-width: 480px;
+  text-align: center;
+
+  a {
+    color: var(--color-primario);
+    font-weight: 600;
+  }
+}

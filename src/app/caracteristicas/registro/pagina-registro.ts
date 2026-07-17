@@ -9,6 +9,11 @@ import { nitEsValido } from '../../compartido/validacion-nit';
  * Registro del comercio (HUF-007): público, sin sesión. El NIT se
  * pre-valida en el cliente (UX temprana) pero el backend decide de verdad
  * (400/409 se muestran tal cual — REGLA DE ORO 1).
+ *
+ * <p>HUF-015: confirmación de contraseña (solo existe en el cliente — el
+ * backend nunca la ve) y el requisito mínimo VISIBLE. El mínimo de 8
+ * caracteres espeja la regla real de CrearCuentaComercioService; si el
+ * backend la endurece, el 400 llegará con su mensaje igual.</p>
  */
 @Component({
   selector: 'app-pagina-registro',
@@ -37,6 +42,10 @@ export class PaginaRegistro {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8)],
     }),
+    confirmacion: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   protected get nitConDigitoInvalido(): boolean {
@@ -44,8 +53,18 @@ export class PaginaRegistro {
     return nit.includes('-') && !nitEsValido(nit);
   }
 
+  protected get contrasenasNoCoinciden(): boolean {
+    const { contrasena, confirmacion } = this.formulario.getRawValue();
+    return confirmacion.length > 0 && contrasena !== confirmacion;
+  }
+
   protected enviar(): void {
-    if (this.formulario.invalid || this.nitConDigitoInvalido || this.enviando()) {
+    if (
+      this.formulario.invalid ||
+      this.nitConDigitoInvalido ||
+      this.contrasenasNoCoinciden ||
+      this.enviando()
+    ) {
       return;
     }
     const valores = this.formulario.getRawValue();

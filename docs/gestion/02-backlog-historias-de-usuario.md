@@ -223,6 +223,23 @@ orden no pagada → el 422 del backend explicado ("solo ventas pagadas").
 con el desglose completo (bruto, fee de rampa, tasa, comisión, neto, cuenta
 destino) y una etiqueta "Simulado" siempre visible; vacío amable.
 
+### ✅ HUF-015 — Navegación pública y confirmación de contraseña
+
+> Nació del primer paseo de uso real tras cerrar vF1.0.0: no había cómo
+> llegar al registro sin conocer la URL, y la contraseña se escribía a ciegas.
+
+**Como** Dueño nuevo **quiero** llegar fácil al registro y confirmar mi
+contraseña **para** no perderme ni registrarme con una clave mal escrita.
+
+**Criterios:**
+
+- Sin sesión, la cabecera ofrece Entrar y Registro; el login enlaza al
+  registro y el registro al login (ida y vuelta sin conocer URLs).
+- Campo doble de contraseña: si no coinciden, aviso claro y el formulario
+  NO se envía (la confirmación solo existe en el cliente).
+- El requisito mínimo visible ("Mínimo 8 caracteres") espeja la regla REAL
+  del backend (CrearCuentaComercioService) — el front no inventa políticas.
+
 ---
 
 ## Épica EF5 — Admin y endurecimiento _(Sprint F5)_

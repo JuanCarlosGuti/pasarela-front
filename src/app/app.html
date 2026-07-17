@@ -6,6 +6,12 @@
       <a routerLink="/tablero">Tu negocio</a>
     </nav>
     <button type="button" class="salir" (click)="salir()">Salir</button>
+  } @else {
+    <!-- HUF-015: sin sesión también hay a dónde ir -->
+    <nav class="navegacion">
+      <a routerLink="/entrar">Entrar</a>
+      <a routerLink="/registro">Registro</a>
+    </nav>
   }
 </header>
 <main class="contenido">

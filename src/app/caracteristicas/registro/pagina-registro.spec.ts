@@ -44,6 +44,7 @@ describe('PaginaRegistro (HUF-007)', () => {
     titular: 'Café Central',
     email: 'ana@cafe.co',
     contrasena: 'secreta-12345678',
+    confirmacion: 'secreta-12345678',
   };
 
   it('tiene labels reales para todos los campos requeridos', () => {
@@ -98,6 +99,27 @@ describe('PaginaRegistro (HUF-007)', () => {
     fixture.detectChanges();
 
     expect(html.textContent).toContain('Tu comercio está en verificación');
+    expect(html.querySelector('a[href="/entrar"]')).not.toBeNull();
+  });
+
+  it('muestra el requisito de la contraseña (mínimo 8, la regla real del backend) (HUF-015)', () => {
+    const html = crear().nativeElement as HTMLElement;
+    expect(html.textContent).toContain('Mínimo 8 caracteres');
+  });
+
+  it('si las contraseñas no coinciden, avisa y NO envía nada (HUF-015)', () => {
+    const fixture = crear();
+    const html = fixture.nativeElement as HTMLElement;
+    llenar(html, { ...datosValidos, confirmacion: 'otra-distinta-123' });
+    fixture.detectChanges();
+    enviar(html);
+
+    expect(html.textContent).toContain('Las contraseñas no coinciden');
+    http.expectNone('/api/comercios');
+  });
+
+  it('el formulario ofrece el enlace a iniciar sesión (HUF-015)', () => {
+    const html = crear().nativeElement as HTMLElement;
     expect(html.querySelector('a[href="/entrar"]')).not.toBeNull();
   });
 

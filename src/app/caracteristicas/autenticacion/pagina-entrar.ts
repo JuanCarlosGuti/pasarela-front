@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthApi } from '../../nucleo/api/auth-api';
 import { SesionService } from '../../nucleo/auth/sesion.service';
 
@@ -12,7 +12,7 @@ import { SesionService } from '../../nucleo/auth/sesion.service';
  */
 @Component({
   selector: 'app-pagina-entrar',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './pagina-entrar.html',
   styleUrl: './pagina-entrar.scss',
 })
