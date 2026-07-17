@@ -5,13 +5,13 @@
 }
 
 .vacio {
-  color: #666;
+  color: var(--color-texto-suave);
   text-align: center;
   padding: var(--espacio-4) 0;
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 .ordenes {
@@ -36,7 +36,7 @@
   cursor: pointer;
 
   .hora {
-    color: #666;
+    color: var(--color-texto-suave);
     font-variant-numeric: tabular-nums;
   }
 

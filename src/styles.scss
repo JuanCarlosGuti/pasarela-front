@@ -49,6 +49,15 @@ button {
   font: inherit;
 }
 
+// Los campos NO heredan color por defecto (el user-agent los pinta negros):
+// en tono oscuro eso era texto negro sobre superficie oscura — lo cazó la
+// auditoría de axe en oscuro (HUF-018).
+input,
+select,
+textarea {
+  color: var(--color-texto);
+}
+
 // Vista imprimible del comprobante (HUF-011): sin cabecera de la app.
 @media print {
   .cabecera {

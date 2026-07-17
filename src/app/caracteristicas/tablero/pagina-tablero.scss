@@ -45,12 +45,12 @@
 }
 
 .cantidad {
-  color: #666;
+  color: var(--color-texto-suave);
   margin: var(--espacio-1) 0 0;
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 .reintentar {

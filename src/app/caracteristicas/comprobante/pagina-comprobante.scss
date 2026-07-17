@@ -29,7 +29,7 @@
 }
 
 .error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 .detalle {
@@ -46,7 +46,7 @@
   }
 
   dt {
-    color: #666;
+    color: var(--color-texto-suave);
   }
 
   dd {
@@ -77,7 +77,7 @@
 
 .pie {
   margin-top: var(--espacio-4);
-  color: #666;
+  color: var(--color-texto-suave);
   font-size: 0.8rem;
   text-align: center;
 }

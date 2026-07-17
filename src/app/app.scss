@@ -54,8 +54,24 @@
   }
 }
 
-.salir {
+.tema {
   margin-left: auto;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 1.1rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radio-chico);
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+}
+
+.salir {
+  margin-left: var(--espacio-2);
   padding: var(--espacio-2) var(--espacio-3);
   min-height: 44px;
   font-weight: 600;

@@ -78,4 +78,25 @@ describe('App (layout raíz)', () => {
     expect(enlaces).toContain('Entrar');
     expect(enlaces).toContain('Registro');
   });
+
+  it('el botón de tema alterna la clase tema-oscuro y persiste la preferencia (HUF-018)', async () => {
+    localStorage.removeItem('tema');
+    document.documentElement.classList.remove('tema-oscuro');
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const boton = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
+      'button.tema',
+    )!;
+    const empezoOscuro = document.documentElement.classList.contains('tema-oscuro');
+
+    boton.click();
+    await fixture.whenStable();
+
+    expect(document.documentElement.classList.contains('tema-oscuro')).toBe(!empezoOscuro);
+    expect(localStorage.getItem('tema')).toBe(empezoOscuro ? 'claro' : 'oscuro');
+
+    // limpieza: el documento es compartido entre pruebas
+    document.documentElement.classList.remove('tema-oscuro');
+    localStorage.removeItem('tema');
+  });
 });

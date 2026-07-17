@@ -12,10 +12,15 @@
   --gradiente-cabecera: linear-gradient(120deg, #0d1330 0%, #251a52 100%);
 
   // semánticos (--color-alerta pasó de #e65100 a #bf360c en TF-004: el
-  // naranja original daba 3.2:1 con blanco y AA exige 4.5:1)
+  // naranja original daba 3.2:1 con blanco y AA exige 4.5:1).
+  // Los -texto existen porque el MISMO color no puede servir de fondo de
+  // badge (con texto blanco) y de texto sobre fondo oscuro: en tema oscuro
+  // se aclaran solo las variantes de texto y los badges no cambian.
   --color-exito: #1b5e20;
   --color-alerta: #bf360c;
   --color-error: #b71c1c;
+  --color-alerta-texto: #bf360c;
+  --color-error-texto: #b71c1c;
 
   // superficies
   --color-fondo: #f6f7fb;
@@ -36,4 +41,29 @@
 
   --radio: 14px;
   --radio-chico: 8px;
+}
+
+// Tono oscuro (HUF-018): una clase en <html> redefine la paleta; los
+// componentes no saben de temas — solo consumen tokens. Los pares
+// texto/fondo se eligieron con contraste ≥ 4.5:1 y axe los re-verifica
+// en el CI también en oscuro. El QR y los badges no cambian: el QR exige
+// fondo blanco y los badges llevan su propio fondo con blanco encima.
+:root.tema-oscuro {
+  // los widgets nativos (selects, date pickers, scrollbars) también en oscuro
+  color-scheme: dark;
+
+  --color-fondo: #0e1220;
+  --color-texto: #e8eaf4;
+  --color-texto-suave: #a6adc8;
+  --color-superficie: #171c30;
+  --color-borde: #2c3350;
+
+  // el primario claro sirve para TEXTO/enlaces/foco sobre superficies
+  // oscuras; los CTA usan el gradiente (hexes fijos) y no cambian
+  --color-primario: #a5b4fc;
+
+  --color-alerta-texto: #ffab70;
+  --color-error-texto: #f28b82;
+
+  --sombra-tarjeta: 0 1px 3px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.45);
 }

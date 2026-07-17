@@ -46,7 +46,8 @@ export class PaginaAdmin implements OnInit {
   protected readonly comercios = signal<ComercioRegistrado[]>([]);
   protected readonly totalElementos = signal(0);
   protected paginaActual = 0;
-  private readonly tamanoPagina = 20;
+  // 10 por pagina: la cola del admin se revisa, no se hojea (pedido del dueno)
+  private readonly tamanoPagina = 10;
   protected readonly confirmando = signal<Confirmacion | null>(null);
   protected readonly errorDecision = signal<string | null>(null);
   protected readonly decidiendo = signal(false);

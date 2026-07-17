@@ -5,13 +5,27 @@
       <a routerLink="/caja">Caja</a>
       <a routerLink="/tablero">Tu negocio</a>
     </nav>
-    <button type="button" class="salir" (click)="salir()">Salir</button>
   } @else {
     <!-- HUF-015: sin sesión también hay a dónde ir -->
     <nav class="navegacion">
       <a routerLink="/entrar">Entrar</a>
       <a routerLink="/registro">Registro</a>
     </nav>
+  }
+  <button
+    type="button"
+    class="tema"
+    (click)="alternarTema()"
+    [attr.aria-label]="temaOscuro() ? 'Cambiar a tono claro' : 'Cambiar a tono oscuro'"
+  >
+    @if (temaOscuro()) {
+      ☀
+    } @else {
+      🌙
+    }
+  </button>
+  @if (sesion.estaAutenticada()) {
+    <button type="button" class="salir" (click)="salir()">Salir</button>
   }
 </header>
 <main class="contenido">

@@ -15,11 +15,11 @@
 }
 
 .instruccion {
-  color: #555;
+  color: var(--color-texto-suave);
 }
 
 .sin-conexion {
-  color: var(--color-alerta);
+  color: var(--color-alerta-texto);
   font-weight: 600;
 }
 
@@ -51,9 +51,9 @@
 }
 
 .expirada h1 {
-  color: var(--color-alerta);
+  color: var(--color-alerta-texto);
 }
 
 .no-existe h1 {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
