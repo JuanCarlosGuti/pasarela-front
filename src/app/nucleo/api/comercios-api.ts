@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface CuentaLiquidacion {
+  /** Banco o billetera (Nequi, Bancolombia...) — HUF-016/HU-027. */
+  banco: string;
   tipo: string;
   numero: string;
   titular: string;
@@ -35,6 +37,13 @@ export interface ComercioRegistrado {
   limites?: LimitesOperacion;
 }
 
+export interface PaginaComercios {
+  comercios: ComercioRegistrado[];
+  totalElementos: number;
+  pagina: number;
+  tamano: number;
+}
+
 /** Cliente del registro de comercios (público — sin sesión). */
 @Injectable({ providedIn: 'root' })
 export class ComerciosApi {
@@ -49,13 +58,13 @@ export class ComerciosApi {
     return this.http.get<ComercioRegistrado>(`/api/comercios/${id}`);
   }
 
-  /** Cola de verificación del admin (HUF-012); sin estado, lista todos. */
-  listar(estado?: string): Observable<ComercioRegistrado[]> {
-    let params = new HttpParams();
+  /** Cola de verificación del admin (HUF-012, paginada desde HUF-016). */
+  listar(estado?: string, pagina = 0, tamano = 20): Observable<PaginaComercios> {
+    let params = new HttpParams().set('pagina', pagina).set('tamano', tamano);
     if (estado) {
       params = params.set('estado', estado);
     }
-    return this.http.get<ComercioRegistrado[]>('/api/comercios', { params });
+    return this.http.get<PaginaComercios>('/api/comercios', { params });
   }
 
   /**

@@ -14,7 +14,14 @@ import { nitEsValido } from '../../compartido/validacion-nit';
  * backend nunca la ve) y el requisito mínimo VISIBLE. El mínimo de 8
  * caracteres espeja la regla real de CrearCuentaComercioService; si el
  * backend la endurece, el 400 llegará con su mensaje igual.</p>
+ *
+ * <p>HUF-016: el banco/billetera viaja aparte del tipo (HU-027 del
+ * backend). Las billeteras (Nequi, Daviplata...) se registran como AHORROS
+ * por convención: al elegirlas, el tipo se fija solo y se bloquea.</p>
  */
+/** Billeteras que se manejan como AHORROS por convención (HUF-016). */
+const BILLETERAS = ['Nequi', 'Daviplata', 'Movii'];
+
 @Component({
   selector: 'app-pagina-registro',
   imports: [ReactiveFormsModule, RouterLink],
@@ -24,6 +31,20 @@ import { nitEsValido } from '../../compartido/validacion-nit';
 export class PaginaRegistro {
   private readonly api = inject(ComerciosApi);
 
+  protected readonly bancos = [
+    'Nequi',
+    'Daviplata',
+    'Movii',
+    'Bancolombia',
+    'Davivienda',
+    'Banco de Bogotá',
+    'BBVA',
+    'Banco de Occidente',
+    'Banco Popular',
+    'Banco Agrario',
+    'Lulo Bank',
+  ];
+
   protected readonly enviando = signal(false);
   protected readonly error = signal<string | null>(null);
   protected readonly registrado = signal<ComercioRegistrado | null>(null);
@@ -31,7 +52,8 @@ export class PaginaRegistro {
   protected readonly formulario = new FormGroup({
     razonSocial: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     nit: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    tipo: new FormControl('NEQUI', { nonNullable: true, validators: [Validators.required] }),
+    banco: new FormControl('Nequi', { nonNullable: true, validators: [Validators.required] }),
+    tipo: new FormControl('AHORROS', { nonNullable: true, validators: [Validators.required] }),
     numero: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     titular: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', {
@@ -47,6 +69,28 @@ export class PaginaRegistro {
       validators: [Validators.required],
     }),
   });
+
+  constructor() {
+    // billetera elegida → tipo AHORROS fijo (bloqueado); banco → se libera
+    this.aplicarReglaDeBilletera(this.formulario.controls.banco.value);
+    this.formulario.controls.banco.valueChanges.subscribe((banco) =>
+      this.aplicarReglaDeBilletera(banco),
+    );
+  }
+
+  protected get esBilletera(): boolean {
+    return BILLETERAS.includes(this.formulario.controls.banco.value);
+  }
+
+  private aplicarReglaDeBilletera(banco: string): void {
+    const tipo = this.formulario.controls.tipo;
+    if (BILLETERAS.includes(banco)) {
+      tipo.setValue('AHORROS');
+      tipo.disable();
+    } else {
+      tipo.enable();
+    }
+  }
 
   protected get nitConDigitoInvalido(): boolean {
     const nit = this.formulario.controls.nit.value.trim();
@@ -75,6 +119,7 @@ export class PaginaRegistro {
         razonSocial: valores.razonSocial,
         nit: valores.nit,
         cuentaLiquidacion: {
+          banco: valores.banco,
           tipo: valores.tipo,
           numero: valores.numero,
           titular: valores.titular,

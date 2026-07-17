@@ -54,6 +54,25 @@
       </li>
     }
   </ul>
+
+  <div class="paginacion">
+    <button
+      type="button"
+      class="anterior"
+      [disabled]="paginaActual === 0"
+      (click)="paginaAnterior()"
+    >
+      Anterior
+    </button>
+    <button
+      type="button"
+      class="siguiente"
+      [disabled]="!hayPaginaSiguiente"
+      (click)="paginaSiguiente()"
+    >
+      Siguiente
+    </button>
+  </div>
 }
 
 @if (confirmando(); as confirmacion) {

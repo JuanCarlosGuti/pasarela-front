@@ -52,7 +52,12 @@ export async function comercioVerificado(
     data: {
       razonSocial,
       nit: nitAleatorio(),
-      cuentaLiquidacion: { tipo: 'NEQUI', numero: '3001112233', titular: razonSocial },
+      cuentaLiquidacion: {
+        banco: 'Nequi',
+        tipo: 'AHORROS',
+        numero: '3001112233',
+        titular: razonSocial,
+      },
       credenciales: { email: correo, contrasena },
     },
   });

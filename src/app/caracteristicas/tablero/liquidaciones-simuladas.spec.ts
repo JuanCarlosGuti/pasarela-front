@@ -44,7 +44,7 @@ describe('LiquidacionesSimuladas', () => {
         comisionPlataforma: 2500,
         comisionRampa: 800,
         tasaCambioSimulada: 4150,
-        cuentaDestinoDescripcion: 'NEQUI ••••4567 — Doña Rosa',
+        cuentaDestinoDescripcion: 'Nequi ••••4567 — Doña Rosa',
         montoNetoComercio: 96700,
         referenciaProveedor: 'RAMPA-SIM-ABC12345',
         estado: 'REGISTRADA',
@@ -60,7 +60,7 @@ describe('LiquidacionesSimuladas', () => {
     expect(html.textContent).toContain('4150');
     expect(html.textContent).toContain('$ 2.500');
     expect(html.textContent).toContain('$ 96.700');
-    expect(html.textContent).toContain('NEQUI ••••4567 — Doña Rosa');
+    expect(html.textContent).toContain('Nequi ••••4567 — Doña Rosa');
     expect(html.textContent).toContain('Simulado');
   });
 

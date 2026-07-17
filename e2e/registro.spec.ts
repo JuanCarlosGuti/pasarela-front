@@ -9,7 +9,7 @@ test.describe('HUF-007: registro de comercio (contra el backend real)', () => {
     await page.goto('/registro');
     await page.getByLabel('Razón social').fill('Café E2E Registro');
     await page.getByLabel('NIT').fill(nitAleatorio());
-    await page.getByLabel('Tipo de cuenta').selectOption('NEQUI');
+    await page.getByLabel('Banco o billetera').selectOption('Nequi');
     await page.getByLabel('Número de cuenta').fill('3001234567');
     await page.getByLabel('Titular de la cuenta').fill('Café E2E Registro');
     await page.getByLabel('Correo').fill(correo);

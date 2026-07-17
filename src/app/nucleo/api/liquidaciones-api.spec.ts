@@ -33,7 +33,7 @@ describe('LiquidacionesApi', () => {
         comisionPlataforma: 2500,
         comisionRampa: 800,
         tasaCambioSimulada: 4150,
-        cuentaDestinoDescripcion: 'NEQUI ••••4567 — Doña Rosa',
+        cuentaDestinoDescripcion: 'Nequi ••••4567 — Doña Rosa',
         montoNetoComercio: 96700,
         referenciaProveedor: 'RAMPA-SIM-ABC12345',
         estado: 'REGISTRADA',
